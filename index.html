@@ -609,6 +609,11 @@
             border-color: rgba(110, 231, 255, 0.36);
         }
 
+        .tree-closing {
+            margin-top: 10px;
+            opacity: 0.88;
+        }
+
         .tree-node.accent-cyan {
             border-color: rgba(110, 231, 255, 0.28);
             box-shadow: 0 10px 24px rgba(110, 231, 255, 0.08);
@@ -1120,33 +1125,42 @@
                     <ul class="tree">
                         <li>
                             <div class="tree-node root">
-                                <strong>&lt;html&gt; ... &lt;/html&gt;</strong>
+                                <strong>&lt;html&gt;</strong>
                                 <span>Raíz del documento</span>
                             </div>
                             <ul>
                                 <li>
                                     <div class="tree-node accent-cyan">
-                                        <strong>&lt;head&gt; ... &lt;/head&gt;</strong>
+                                        <strong>&lt;head&gt;</strong>
                                         <span>Metadatos y recursos</span>
                                     </div>
                                     <ul>
                                         <li><div class="tree-node accent-cyan"><strong>&lt;meta&gt;</strong><span>Codificación y viewport</span></div></li>
-                                        <li><div class="tree-node accent-cyan"><strong>&lt;title&gt; ... &lt;/title&gt;</strong><span>Título de la página</span></div></li>
+                                        <li><div class="tree-node accent-cyan"><strong>&lt;title&gt;&lt;/title&gt;</strong><span>Título de la página</span></div></li>
                                         <li><div class="tree-node accent-cyan"><strong>&lt;link&gt;</strong><span>Hoja de estilos</span></div></li>
                                     </ul>
+                                    <div class="tree-node accent-cyan tree-closing">
+                                        <strong>&lt;/head&gt;</strong>
+                                    </div>
                                 </li>
                                 <li>
                                     <div class="tree-node accent-fuchsia">
-                                        <strong>&lt;body&gt; ... &lt;/body&gt;</strong>
+                                        <strong>&lt;body&gt;</strong>
                                         <span>Contenido visible</span>
                                     </div>
                                     <ul>
-                                        <li><div class="tree-node accent-fuchsia"><strong>&lt;header&gt; ... &lt;/header&gt;</strong><span>Encabezado</span></div></li>
-                                        <li><div class="tree-node accent-fuchsia"><strong>&lt;main&gt; ... &lt;/main&gt;</strong><span>Contenido principal</span></div></li>
-                                        <li><div class="tree-node accent-fuchsia"><strong>&lt;footer&gt; ... &lt;/footer&gt;</strong><span>Cierre del documento</span></div></li>
+                                        <li><div class="tree-node accent-fuchsia"><strong>&lt;header&gt;&lt;/header&gt;</strong><span>Encabezado</span></div></li>
+                                        <li><div class="tree-node accent-fuchsia"><strong>&lt;main&gt;&lt;/main&gt;</strong><span>Contenido principal</span></div></li>
+                                        <li><div class="tree-node accent-fuchsia"><strong>&lt;footer&gt;&lt;/footer&gt;</strong><span>Cierre del documento</span></div></li>
                                     </ul>
+                                    <div class="tree-node accent-fuchsia tree-closing">
+                                        <strong>&lt;/body&gt;</strong>
+                                    </div>
                                 </li>
                             </ul>
+                            <div class="tree-node root tree-closing">
+                                <strong>&lt;/html&gt;</strong>
+                            </div>
                         </li>
                     </ul>
                 </div>

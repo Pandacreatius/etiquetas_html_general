@@ -591,6 +591,11 @@
             box-shadow: 0 10px 24px rgba(255, 79, 191, 0.08);
         }
 
+        .tree-closing {
+            margin-top: 10px;
+            opacity: 0.88;
+        }
+
         .code-block {
             background: rgba(10, 14, 39, 0.8);
             border: 1px solid rgba(0, 217, 255, 0.3);
@@ -1103,33 +1108,42 @@
                     <ul class="tree">
                         <li>
                             <div class="tree-node root">
-                                <strong>&lt;body&gt; ... &lt;/body&gt;</strong>
+                                <strong>&lt;body&gt;</strong>
                                 <span>Estructura visible del documento</span>
                             </div>
                             <ul>
-                                <li><div class="tree-node accent-cyan"><strong>&lt;header&gt; ... &lt;/header&gt;</strong><span>Presentación inicial</span></div></li>
-                                <li><div class="tree-node accent-cyan"><strong>&lt;nav&gt; ... &lt;/nav&gt;</strong><span>Navegación principal</span></div></li>
+                                <li><div class="tree-node accent-cyan"><strong>&lt;header&gt;&lt;/header&gt;</strong><span>Presentación inicial</span></div></li>
+                                <li><div class="tree-node accent-cyan"><strong>&lt;nav&gt;&lt;/nav&gt;</strong><span>Navegación principal</span></div></li>
                                 <li>
                                     <div class="tree-node accent-fuchsia">
-                                        <strong>&lt;main&gt; ... &lt;/main&gt;</strong>
+                                        <strong>&lt;main&gt;</strong>
                                         <span>Contenido principal</span>
                                     </div>
                                     <ul>
                                         <li>
                                             <div class="tree-node accent-fuchsia">
-                                                <strong>&lt;article&gt; ... &lt;/article&gt;</strong>
+                                                <strong>&lt;article&gt;</strong>
                                                 <span>Unidad de contenido autónoma</span>
                                             </div>
                                             <ul>
-                                                <li><div class="tree-node accent-fuchsia"><strong>&lt;section&gt; ... &lt;/section&gt;</strong><span>Bloque temático</span></div></li>
-                                                <li><div class="tree-node accent-fuchsia"><strong>&lt;figure&gt; ... &lt;/figure&gt;</strong><span>Recurso con contexto</span></div></li>
+                                                <li><div class="tree-node accent-fuchsia"><strong>&lt;section&gt;&lt;/section&gt;</strong><span>Bloque temático</span></div></li>
+                                                <li><div class="tree-node accent-fuchsia"><strong>&lt;figure&gt;&lt;/figure&gt;</strong><span>Recurso con contexto</span></div></li>
                                             </ul>
+                                            <div class="tree-node accent-fuchsia tree-closing">
+                                                <strong>&lt;/article&gt;</strong>
+                                            </div>
                                         </li>
-                                        <li><div class="tree-node accent-cyan"><strong>&lt;aside&gt; ... &lt;/aside&gt;</strong><span>Información complementaria</span></div></li>
+                                        <li><div class="tree-node accent-cyan"><strong>&lt;aside&gt;&lt;/aside&gt;</strong><span>Información complementaria</span></div></li>
                                     </ul>
+                                    <div class="tree-node accent-fuchsia tree-closing">
+                                        <strong>&lt;/main&gt;</strong>
+                                    </div>
                                 </li>
-                                <li><div class="tree-node accent-cyan"><strong>&lt;footer&gt; ... &lt;/footer&gt;</strong><span>Información final</span></div></li>
+                                <li><div class="tree-node accent-cyan"><strong>&lt;footer&gt;&lt;/footer&gt;</strong><span>Información final</span></div></li>
                             </ul>
+                            <div class="tree-node root tree-closing">
+                                <strong>&lt;/body&gt;</strong>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -1264,39 +1278,51 @@
                     <ul class="tree">
                         <li>
                             <div class="tree-node root">
-                                <strong>&lt;html&gt; ... &lt;/html&gt;</strong>
+                                <strong>&lt;html&gt;</strong>
                                 <span>Raíz completa del documento</span>
                             </div>
                             <ul>
                                 <li>
                                     <div class="tree-node accent-cyan">
-                                        <strong>&lt;head&gt; ... &lt;/head&gt;</strong>
+                                        <strong>&lt;head&gt;</strong>
                                         <span>Metadatos, enlaces y título</span>
+                                    </div>
+                                    <div class="tree-node accent-cyan tree-closing">
+                                        <strong>&lt;/head&gt;</strong>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="tree-node accent-fuchsia">
-                                        <strong>&lt;body&gt; ... &lt;/body&gt;</strong>
+                                        <strong>&lt;body&gt;</strong>
                                         <span>Contenido visible de la página</span>
                                     </div>
                                     <ul>
-                                        <li><div class="tree-node accent-cyan"><strong>&lt;header&gt; ... &lt;/header&gt;</strong><span>Cabecera del sitio o sección</span></div></li>
-                                        <li><div class="tree-node accent-cyan"><strong>&lt;nav&gt; ... &lt;/nav&gt;</strong><span>Bloque principal de navegación</span></div></li>
+                                        <li><div class="tree-node accent-cyan"><strong>&lt;header&gt;&lt;/header&gt;</strong><span>Cabecera del sitio o sección</span></div></li>
+                                        <li><div class="tree-node accent-cyan"><strong>&lt;nav&gt;&lt;/nav&gt;</strong><span>Bloque principal de navegación</span></div></li>
                                         <li>
                                             <div class="tree-node accent-fuchsia">
-                                                <strong>&lt;main&gt; ... &lt;/main&gt;</strong>
+                                                <strong>&lt;main&gt;</strong>
                                                 <span>Núcleo del contenido principal</span>
                                             </div>
                                             <ul>
-                                                <li><div class="tree-node accent-fuchsia"><strong>&lt;article&gt; ... &lt;/article&gt;</strong><span>Contenido autónomo</span></div></li>
-                                                <li><div class="tree-node accent-fuchsia"><strong>&lt;section&gt; ... &lt;/section&gt;</strong><span>Subbloques temáticos</span></div></li>
-                                                <li><div class="tree-node accent-cyan"><strong>&lt;aside&gt; ... &lt;/aside&gt;</strong><span>Información complementaria</span></div></li>
+                                                <li><div class="tree-node accent-fuchsia"><strong>&lt;article&gt;&lt;/article&gt;</strong><span>Contenido autónomo</span></div></li>
+                                                <li><div class="tree-node accent-fuchsia"><strong>&lt;section&gt;&lt;/section&gt;</strong><span>Subbloques temáticos</span></div></li>
+                                                <li><div class="tree-node accent-cyan"><strong>&lt;aside&gt;&lt;/aside&gt;</strong><span>Información complementaria</span></div></li>
                                             </ul>
+                                            <div class="tree-node accent-fuchsia tree-closing">
+                                                <strong>&lt;/main&gt;</strong>
+                                            </div>
                                         </li>
-                                        <li><div class="tree-node accent-cyan"><strong>&lt;footer&gt; ... &lt;/footer&gt;</strong><span>Cierre y datos finales</span></div></li>
+                                        <li><div class="tree-node accent-cyan"><strong>&lt;footer&gt;&lt;/footer&gt;</strong><span>Cierre y datos finales</span></div></li>
                                     </ul>
+                                    <div class="tree-node accent-fuchsia tree-closing">
+                                        <strong>&lt;/body&gt;</strong>
+                                    </div>
                                 </li>
                             </ul>
+                            <div class="tree-node root tree-closing">
+                                <strong>&lt;/html&gt;</strong>
+                            </div>
                         </li>
                     </ul>
                 </div>
