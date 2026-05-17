@@ -1118,21 +1118,50 @@
                         </ul>
 
                         <div class="tips">
-                            <strong>🔒 Seguridad:</strong> Usa <code>sandbox</code> para restringir lo que puede hacer el iframe
+                            <strong>🔒 Seguridad:</strong> Usa <code>sandbox</code> para limitar qué acciones puede realizar el contenido embebido dentro del iframe.
                         </div>
                     </div>
 
                     <div class="section">
                         <h3>Atributos de Seguridad</h3>
+                        <p>El atributo <code>sandbox</code> crea un entorno más aislado para el iframe. Cuando lo añades, el navegador aplica restricciones por defecto al contenido embebido: evita que ejecute ciertas acciones peligrosas, limita la interacción con la página principal y reduce el riesgo si el contenido externo no es totalmente confiable.</p>
+                        <p>La idea general es esta: primero bloqueas todo lo que no necesitas y después vas permitiendo solo capacidades concretas mediante valores <code>allow-...</code>. Es una práctica muy útil cuando insertas contenido de terceros, formularios externos o páginas que no controlas directamente.</p>
                         <ul class="property-list">
                             <li><strong>sandbox=""</strong> - Máxima restricción</li>
-                            <li><strong>sandbox="allow-same-origin"</strong> - Permite scripts</li>
-                            <li><strong>sandbox="allow-scripts"</strong> - Permite JavaScript</li>
-                            <li><strong>sandbox="allow-forms"</strong> - Permite formularios</li>
+                            <li><strong>sandbox="allow-same-origin"</strong> - Mantiene el origen original del documento, útil si el contenido necesita funcionar como misma procedencia</li>
+                            <li><strong>sandbox="allow-scripts"</strong> - Permite ejecutar JavaScript dentro del iframe</li>
+                            <li><strong>sandbox="allow-forms"</strong> - Permite enviar formularios desde el contenido embebido</li>
                         </ul>
 
+                        <h3>Cómo interpretar sandbox</h3>
+                        <ul class="property-list">
+                            <li><strong>Sin sandbox</strong> - El iframe funciona con muchas más libertades, por lo que el contenido externo tiene menos restricciones.</li>
+                            <li><strong>Con sandbox vacío</strong> - El iframe queda muy bloqueado. Es la opción más segura si solo quieres mostrar contenido sin interacción compleja.</li>
+                            <li><strong>Con excepciones allow-...</strong> - Vas abriendo capacidades concretas solo cuando son necesarias para que ese recurso funcione bien.</li>
+                        </ul>
+
+                        <h3>Combinaciones habituales</h3>
+                        <div class="grid-2">
+                            <div class="tag-box">
+                                <strong>Contenido visual simple</strong>
+                                <p><code>sandbox=""</code> suele ser suficiente si solo quieres incrustar una página muy restringida y sin interacción avanzada.</p>
+                            </div>
+                            <div class="tag-box">
+                                <strong>Contenido con scripts</strong>
+                                <p><code>sandbox="allow-scripts"</code> permite JavaScript, pero sigue manteniendo otras limitaciones de seguridad.</p>
+                            </div>
+                            <div class="tag-box">
+                                <strong>Formularios externos</strong>
+                                <p><code>sandbox="allow-forms allow-scripts"</code> puede ser útil si el contenido necesita interacción y validaciones.</p>
+                            </div>
+                            <div class="tag-box">
+                                <strong>Casos más delicados</strong>
+                                <p><code>allow-same-origin</code> debe usarse con criterio, porque da más libertad al documento embebido respecto a su origen.</p>
+                            </div>
+                        </div>
+
                         <div class="tips">
-                            <strong>⚠️ Importante:</strong> Siempre usa sandbox con contenido de terceros
+                            <strong>⚠️ Importante:</strong> <code>allow-same-origin</code> no activa scripts por sí solo. Si necesitas scripts, debes indicar también <code>allow-scripts</code>. Cuantas menos excepciones añadas, más seguro será el iframe.
                         </div>
                     </div>
 
