@@ -55,6 +55,7 @@
         }
 
         .container {
+            width: 100%;
             max-width: 1400px;
             margin: 0 auto;
             background: rgba(11, 16, 32, 0.88);
@@ -66,6 +67,17 @@
             overflow: hidden;
             border: 1px solid rgba(97, 218, 251, 0.16);
             animation: slideUp 0.8s ease-out;
+        }
+
+        .container,
+        header,
+        nav,
+        .content,
+        .section,
+        .footer-grid,
+        .footer-highlight {
+            min-width: 0;
+            max-width: 100%;
         }
 
         @keyframes slideUp {
