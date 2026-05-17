@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio, Video e iFrame - Ejercicios Interactivos</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6ee7ff;
+            --secondary: #ff4fbf;
+            --accent: #ff4fbf;
+            --success: #6ee7ff;
+            --dark: #0b1020;
+            --dark-soft: #0b1020;
+            --light: #f5f7fb;
+            --gray: #f5f7fb;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0b1020 0%, #0b1020 100%);
+            min-height: 100vh;
+            padding: 60px 20px;
+            color: #E0E0E0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(110, 231, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 79, 191, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(11, 16, 32, 0.88);
+            backdrop-filter: blur(18px);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35),
+                        0 8px 32px rgba(97, 218, 251, 0.1),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(97, 218, 251, 0.16);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            background:
+                linear-gradient(140deg, rgba(110, 231, 255, 0.14) 0%, rgba(255, 79, 191, 0.1) 100%);
+            border-bottom: 1px solid rgba(97, 218, 251, 0.16);
+            padding: 28px 60px 72px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(131, 56, 236, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(20px); }
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 52px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: var(--light);
+        }
+
+        .brand-mark {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, rgba(97, 218, 251, 0.92) 0%, rgba(124, 58, 237, 0.92) 100%);
+            color: var(--dark);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(97, 218, 251, 0.22);
+        }
+
+        .brand-copy {
+            text-align: left;
+        }
+
+        .brand-copy strong,
+        .brand-copy span {
+            display: block;
+        }
+
+        .brand-copy strong {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            letter-spacing: -0.03em;
+        }
+
+        .brand-copy span {
+            color: rgba(248, 251, 255, 0.62);
+            font-size: 0.84rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(248, 251, 255, 0.78);
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.04);
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.is-current {
+            color: var(--light);
+            border-color: rgba(97, 218, 251, 0.34);
+            background: rgba(97, 218, 251, 0.1);
+            box-shadow: 0 12px 24px rgba(97, 218, 251, 0.12);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(97, 218, 251, 0.22);
+            background: rgba(7, 17, 31, 0.48);
+            color: rgba(248, 251, 255, 0.8);
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 22px;
+        }
+
+        header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4.35em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff 0%, #bff4ff 55%, #ff8ed2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+            position: relative;
+            z-index: 1;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(10deg); }
+        }
+
+        header p {
+            font-size: 1.3em;
+            color: rgba(224, 224, 224, 0.8);
+            position: relative;
+            z-index: 1;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .hero-actions,
+        .section-nav {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-actions {
+            margin-top: 30px;
+            margin-bottom: 34px;
+        }
+
+        .hero-link,
+        .section-nav button {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .hero-link {
+            display: inline-flex;
+            text-decoration: none;
+            padding: 14px 22px;
+            border-radius: 14px;
+            border: 1px solid rgba(97, 218, 251, 0.18);
+            color: var(--light);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-link.primary {
+            color: var(--dark);
+            background: linear-gradient(135deg, var(--primary) 0%, #bff4ff 100%);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .hero-link:hover,
+        .section-nav button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            padding: 0 60px 34px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            font-family: 'Space Grotesk', sans-serif;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(224, 224, 224, 0.78);
+            padding: 12px 18px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 0.98em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            border-color: rgba(97, 218, 251, 0.34);
+            color: var(--light);
+            background: rgba(97, 218, 251, 0.1);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary) 0%, #90f3ff 100%);
+            color: var(--dark);
+            border-color: rgba(255, 255, 255, 0.45);
+            box-shadow: 0 10px 24px rgba(97, 218, 251, 0.22);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 60px;
+            align-items: start;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(97, 218, 251, 0.12);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section:hover {
+            border-color: rgba(97, 218, 251, 0.3);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18),
+                        0 8px 24px rgba(97, 218, 251, 0.12),
+                        inset 0 1px 1px rgba(97, 218, 251, 0.08);
+            transform: translateY(-5px);
+        }
+
+        .section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--primary);
+            font-size: 2em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .section h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--secondary);
+            font-size: 1.4em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .section p {
+            color: rgba(224, 224, 224, 0.85);
+            line-height: 1.8;
+            margin: 15px 0;
+        }
+
+        .code-block {
+            background: rgba(10, 14, 39, 0.8);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            color: var(--primary);
+            padding: 25px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 20px 0;
+            line-height: 1.6;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-block::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .code-block::-webkit-scrollbar-track {
+            background: rgba(0, 217, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .code-block::-webkit-scrollbar-thumb {
+            background: rgba(0, 217, 255, 0.5);
+            border-radius: 10px;
+        }
+
+        .example {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1.5px dashed rgba(0, 217, 255, 0.4);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .example:hover {
+            border-color: rgba(0, 217, 255, 0.7);
+            background: rgba(0, 217, 255, 0.05);
+        }
+
+        .example audio,
+        .example video,
+        .example iframe {
+            max-width: 100%;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .property-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .property-list li {
+            padding: 14px 16px;
+            margin: 10px 0;
+            background: rgba(0, 217, 255, 0.08);
+            border-radius: 10px;
+            border-left: 3px solid var(--secondary);
+            font-size: 0.95em;
+            color: rgba(224, 224, 224, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .property-list li:hover {
+            background: rgba(0, 217, 255, 0.15);
+            border-left-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .property-list strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .challenge {
+            background: rgba(255, 193, 7, 0.08);
+            border-left: 4px solid var(--secondary);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .challenge:hover {
+            background: rgba(255, 193, 7, 0.12);
+            border-color: rgba(255, 193, 7, 0.4);
+        }
+
+        .challenge h4 {
+            color: var(--secondary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .challenge p {
+            color: rgba(224, 224, 224, 0.8);
+            margin-bottom: 12px;
+        }
+
+        .challenge-code {
+            background: rgba(10, 14, 39, 0.9);
+            color: var(--primary);
+            padding: 18px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            line-height: 1.5;
+            display: block;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .challenge-code.hidden-solution {
+            color: transparent;
+            min-height: 88px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-style: dashed;
+        }
+
+        .challenge-code.hidden-solution::before {
+            content: 'Haz clic para mostrar la solucion';
+            color: rgba(248, 251, 255, 0.86);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            text-align: center;
+            letter-spacing: 0.02em;
+        }
+
+        .challenge-code:hover {
+            background: rgba(10, 14, 39, 0.95);
+            transform: translateX(8px);
+            border-color: rgba(0, 217, 255, 0.5);
+            box-shadow: 0 4px 12px rgba(0, 217, 255, 0.2);
+        }
+
+        .challenge-code.solved {
+            background: rgba(51, 170, 85, 0.15);
+            color: var(--success);
+            border-color: var(--success);
+            animation: pulse 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .tips {
+            background: rgba(58, 134, 255, 0.1);
+            border-left: 4px solid var(--success);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 0.95em;
+            border: 1px solid rgba(58, 134, 255, 0.2);
+            color: rgba(224, 224, 224, 0.9);
+        }
+
+        .tips strong {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(131, 56, 236, 0.1) 100%);
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .summary-box:hover {
+            border-color: rgba(0, 217, 255, 0.6);
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.15) 0%, rgba(131, 56, 236, 0.15) 100%);
+        }
+
+        .summary-box h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .summary-box p {
+            color: rgba(224, 224, 224, 0.85);
+            line-height: 1.8;
+        }
+
+        .back-to-top {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 52px;
+            height: 52px;
+            border: 1px solid rgba(97, 218, 251, 0.24);
+            border-radius: 16px;
+            background: rgba(7, 17, 31, 0.84);
+            color: var(--light);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            z-index: 300;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: rgba(97, 218, 251, 0.14);
+            border-color: rgba(97, 218, 251, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .site-footer {
+            margin-top: 48px;
+            padding: 40px 60px;
+            border-top: 1px solid rgba(110, 231, 255, 0.16);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 79, 191, 0.06) 100%);
+        }
+
+        .footer-highlight {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(110, 231, 255, 0.12) 0%, rgba(255, 79, 191, 0.14) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-kicker {
+            color: rgba(245, 247, 251, 0.78);
+        }
+
+        .footer-kicker strong {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--light);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem;
+        }
+
+        .footer-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 190px;
+            padding: 13px 18px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: var(--dark);
+            background: linear-gradient(135deg, var(--primary) 0%, #bff4ff 100%);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .footer-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr;
+            gap: 28px;
+        }
+
+        .footer-brand strong,
+        .footer-column h4 {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--light);
+            margin-bottom: 12px;
+        }
+
+        .footer-brand p,
+        .footer-column p,
+        .footer-column a {
+            color: rgba(245, 247, 251, 0.72);
+            text-decoration: none;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+
+        .footer-note {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(245, 247, 251, 0.58);
+            font-size: 0.88rem;
+        }
+
+        .emoji {
+            font-size: 1.3em;
+            display: inline-block;
+        }
+
+        code {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 980px) {
+            .topbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .brand {
+                justify-content: center;
+            }
+
+            .brand-copy {
+                text-align: center;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            .content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 30px;
+            }
+
+            header {
+                padding: 24px 24px 52px;
+            }
+
+            header h1 {
+                font-size: 2.9em;
+            }
+
+            header p {
+                font-size: 1.06em;
+            }
+
+            .tabs {
+                padding: 0 24px 24px;
+                gap: 10px;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            .section h2 {
+                font-size: 1.6em;
+            }
+
+            .footer-highlight {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .footer-cta {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="topbar">
+                <a class="brand" href="index.html">
+                    <span class="brand-mark">HL</span>
+                    <span class="brand-copy">
+                        <strong>HTML Launchpad</strong>
+                    <span>Material de estudio de HTML</span>
+                    </span>
+                </a>
+                <nav class="nav-links" aria-label="Navegación principal">
+                    <a href="index.html">Inicio</a>
+                    <a href="semantica_headings.html">Semántica</a>
+                    <a href="ejercicio_img.html">Imágenes</a>
+                    <a class="is-current" href="ejercicio_multimedia.html">Multimedia</a>
+                    <a href="seo.html">SEO</a>
+                </nav>
+            </div>
+            <div class="hero-badge">Audio, video e iframe en HTML</div>
+            <h1>Multimedia que hace tu HTML más producto</h1>
+            <p>Aprende a integrar audio, video e iframes con una interfaz clara, modular y lista para una experiencia tipo startup educativa.</p>
+            <div class="hero-actions">
+                <a class="hero-link primary" href="#panel-multimedia">Ver contenido</a>
+                <a class="hero-link" href="seo.html">Ver SEO</a>
+            </div>
+        </header>
+
+        <div class="tabs section-nav" id="panel-multimedia">
+            <button class="tab-btn active" onclick="switchTab('audio', this)">🔊 Audio</button>
+            <button class="tab-btn" onclick="switchTab('video', this)">🎥 Video</button>
+            <button class="tab-btn" onclick="switchTab('iframe', this)">🔗 iFrame</button>
+        </div>
+
+        <div id="audio" class="tab-content active">
+            <div class="content">
+                <div>
+                    <div class="section">
+                        <h2><span class="emoji">🔊</span> Audio - Sintaxis Básica</h2>
+                        
+                        <div class="code-block">&lt;audio controls&gt;<br>  &lt;source src="cancion.mp3" type="audio/mpeg"&gt;<br>  Tu navegador no soporta audio HTML5<br>&lt;/audio&gt;</div>
+
+                        <p>La etiqueta <strong>&lt;audio&gt;</strong> permite incrustar contenido de audio. Es importante proporcionar múltiples formatos para compatibilidad.</p>
+
+                        <h3>Atributos Principales</h3>
+                        <ul class="property-list">
+                            <li><strong>controls</strong> - Muestra botones de reproducción</li>
+                            <li><strong>autoplay</strong> - Reproduce automáticamente (requiere muted)</li>
+                            <li><strong>muted</strong> - Audio silenciado (necesario para autoplay)</li>
+                            <li><strong>loop</strong> - Repite la reproducción</li>
+                            <li><strong>preload</strong> - auto, metadata, none</li>
+                        </ul>
+
+                        <div class="tips">
+                            <strong>💡 Importante:</strong> Los navegadores modernos bloquean autoplay sin <code>muted</code>. Siempre proporciona múltiples formatos con <code>&lt;source&gt;</code>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Formatos de Audio</h3>
+                        <ul class="property-list">
+                            <li><strong>MP3</strong> - .mp3 | type="audio/mpeg" (más compatible)</li>
+                            <li><strong>WAV</strong> - .wav | type="audio/wav" (sin compresión)</li>
+                            <li><strong>OGG</strong> - .ogg | type="audio/ogg" (open source)</li>
+                            <li><strong>AAC</strong> - .aac | type="audio/aac" (calidad)</li>
+                        </ul>
+
+                        <div class="tips">
+                            <strong>⚡ Consejo:</strong> Usa MP3 como primario y OGG como fallback para máxima compatibilidad
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Atributos Avanzados</h3>
+                        <ul class="property-list">
+                            <li><strong>volume</strong> - Volumen de 0.0 a 1.0 (requiere JS)</li>
+                            <li><strong>currentTime</strong> - Posición actual (requiere JS)</li>
+                            <li><strong>duration</strong> - Duración total (requiere JS)</li>
+                            <li><strong>playbackRate</strong> - Velocidad de reproducción (requiere JS)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section">
+                        <h2><span class="emoji">📋</span> Ejemplos</h2>
+
+                        <h3>1️⃣ Audio Simple</h3>
+                        <div class="example">
+                            <audio controls style="width: 100%;">
+                                <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==" type="audio/wav">
+                                Tu navegador no soporta audio
+                            </audio>
+                            <p>Audio básico con controles</p>
+                        </div>
+                        <div class="code-block">&lt;audio controls&gt;<br>  &lt;source src="musica.mp3"<br>         type="audio/mpeg"&gt;<br>&lt;/audio&gt;</div>
+
+                        <h3>2️⃣ Audio con Fallback</h3>
+                        <div class="code-block">&lt;audio controls preload="metadata"&gt;<br>  &lt;source src="audio.mp3" type="audio/mpeg"&gt;<br>  &lt;source src="audio.ogg" type="audio/ogg"&gt;<br>  &lt;p&gt;Descarga: &lt;a href="audio.mp3"&gt;MP3&lt;/a&gt;&lt;/p&gt;<br>&lt;/audio&gt;</div>
+
+                        <h3>3️⃣ Audio en Loop</h3>
+                        <div class="code-block">&lt;audio controls loop muted autoplay&gt;<br>  &lt;source src="fondo.mp3"&gt;<br>&lt;/audio&gt;</div>
+
+                        <h3>4️⃣ Audio con JavaScript</h3>
+                        <div class="code-block">&lt;audio id="miAudio"&gt;<br>  &lt;source src="cancion.mp3"&gt;<br>&lt;/audio&gt;<br>&lt;br&gt;<br>&lt;script&gt;<br>const audio = document.getElementById('miAudio');<br>audio.volume = 0.5; // 50% volumen<br>audio.playbackRate = 1.5; // Reproducción 1.5x<br>&lt;/script&gt;</div>
+                    </div>
+
+                    <div class="section">
+                        <h2><span class="emoji">🚀</span> Desafíos</h2>
+
+                        <div class="challenge">
+                            <h4><span class="emoji">1️⃣</span> Desafío Básico</h4>
+                            <p>Crea un audio con controles y preload en metadata</p>
+                            <div class="challenge-code" onclick="this.classList.toggle('solved')">
+                                &lt;audio controls preload="metadata"&gt;<br>
+&nbsp;&nbsp;&lt;source src="audio.mp3" type="audio/mpeg"&gt;<br>
+&lt;/audio&gt;
+                            </div>
+                        </div>
+
+                        <div class="challenge">
+                            <h4><span class="emoji">2️⃣</span> Desafío Múltiples Formatos</h4>
+                            <p>Audio con MP3, OGG y WAV como fallback</p>
+                            <div class="challenge-code" onclick="this.classList.toggle('solved')">
+                                &lt;audio controls&gt;<br>
+&nbsp;&nbsp;&lt;source src="audio.mp3" type="audio/mpeg"&gt;<br>
+&nbsp;&nbsp;&lt;source src="audio.ogg" type="audio/ogg"&gt;<br>
+&nbsp;&nbsp;&lt;source src="audio.wav" type="audio/wav"&gt;<br>
+&lt;/audio&gt;
+                            </div>
+                        </div>
+
+                        <div class="challenge">
+                            <h4><span class="emoji">3️⃣</span> Desafío Avanzado</h4>
+                            <p>Audio en loop, muted y autoplay</p>
+                            <div class="challenge-code" onclick="this.classList.toggle('solved')">
+                                &lt;audio autoplay muted loop&gt;<br>
+&nbsp;&nbsp;&lt;source src="fondo.mp3" type="audio/mpeg"&gt;<br>
+&lt;/audio&gt;
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="summary-box">
+                            <h3>✅ Checklist Audio</h3>
+                            <p>✔️ Usa múltiples formatos<br>✔️ Incluye atributo controls<br>✔️ Para autoplay, usa muted<br>✔️ Optimiza tamaño de archivo<br>✔️ Proporciona fallback de descarga</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="video" class="tab-content">
+            <div class="content">
+                <div>
+                    <div class="section">
+                        <h2><span class="emoji">🎥</span> Video - Sintaxis Básica</h2>
+                        
+                        <div class="code-block">&lt;video controls width="640" height="360"&gt;<br>  &lt;source src="video.mp4" type="video/mp4"&gt;<br>  Tu navegador no soporta video HTML5<br>&lt;/video&gt;</div>
+
+                        <p>La etiqueta <strong>&lt;video&gt;</strong> es similar a audio pero para contenido visual. Permite control total de reproducción y apariencia.</p>
+
+                        <h3>Atributos Principales</h3>
+                        <ul class="property-list">
+                            <li><strong>controls</strong> - Barra de control visible</li>
+                            <li><strong>width / height</strong> - Dimensiones del video</li>
+                            <li><strong>autoplay</strong> - Inicia automáticamente</li>
+                            <li><strong>muted</strong> - Necesario para autoplay</li>
+                            <li><strong>poster</strong> - Imagen antes de reproducir</li>
+                            <li><strong>preload</strong> - auto, metadata, none</li>
+                        </ul>
+
+                        <div class="tips">
+                            <strong>💡 Tip:</strong> Usa <code>poster</code> para mostrar una imagen atractiva antes de que el usuario pulse play
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Formatos de Video</h3>
+                        <ul class="property-list">
+                            <li><strong>MP4</strong> - .mp4 | type="video/mp4" (estándar)</li>
+                            <li><strong>WebM</strong> - .webm | type="video/webm" (open source)</li>
+                            <li><strong>Ogg</strong> - .ogv | type="video/ogg" (alternativa)</li>
+                        </ul>
+
+                        <div class="tips">
+                            <strong>📊 Compatibilidad:</strong> MP4 es el más universal. WebM para navegadores modernos
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Atributos Video Específicos</h3>
+                        <ul class="property-list">
+                            <li><strong>playsinline</strong> - Reproduce en línea (no fullscreen en iOS)</li>
+                            <li><strong>crossorigin</strong> - Para CORS en videos remotos</li>
+                            <li><strong>controlsList</strong> - Controla qué botones mostrar</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section">
+                        <h2><span class="emoji">📋</span> Ejemplos</h2>
+
+                        <h3>1️⃣ Video Simple</h3>
+                        <div class="example">
+                            <video controls width="100%" style="max-width: 500px; background: #000;">
+                                <source src="data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc2gyaXMxbXA0MWN1dGFh" type="video/mp4">
+                                Tu navegador no soporta video
+                            </video>
+                            <p>Video básico con controles</p>
+                        </div>
+                        <div class="code-block">&lt;video controls width="640" height="360"&gt;<br>  &lt;source src="video.mp4" type="video/mp4"&gt;<br>&lt;/video&gt;</div>
+
+                        <h3>2️⃣ Video Responsive</h3>
+                        <div class="code-block">&lt;video controls width="100%" style="max-width: 800px"&gt;<br>  &lt;source src="video.mp4" type="video/mp4"&gt;<br>&lt;/video&gt;</div>
+
+                        <h3>3️⃣ Video con Poster</h3>
+                        <div class="code-block">&lt;video controls width="640" height="360"<br>       poster="portada.jpg"&gt;<br>  &lt;source src="video.mp4" type="video/mp4"&gt;<br>&lt;/video&gt;</div>
+
+                        <h3>4️⃣ Video Múltiples Formatos</h3>
+                        <div class="code-block">&lt;video controls poster="cover.jpg"<br>       playsinline&gt;<br>  &lt;source src="video.mp4" type="video/mp4"&gt;<br>  &lt;source src="video.webm" type="video/webm"&gt;<br>  &lt;p&gt;Descarga: &lt;a href="video.mp4"&gt;MP4&lt;/a&gt;&lt;/p&gt;<br>&lt;/video&gt;</div>
+
+                        <h3>5️⃣ Video Autoplay</h3>
+                        <div class="code-block">&lt;video autoplay muted loop<br>       width="100%"&gt;<br>  &lt;source src="fondo.mp4" type="video/mp4"&gt;<br>&lt;/video&gt;</div>
+                    </div>
+
+                    <div class="section">
+                        <h2><span class="emoji">🚀</span> Desafíos</h2>
+
+                        <div class="challenge">
+                            <h4><span class="emoji">1️⃣</span> Desafío Básico</h4>
+                            <p>Video con poster y dimensiones fijas</p>
+                            <div class="challenge-code" onclick="this.classList.toggle('solved')">
+                                &lt;video controls width="640" height="360"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;poster="preview.jpg"&gt;<br>
+&nbsp;&nbsp;&lt;source src="video.mp4" type="video/mp4"&gt;<br>
+&lt;/video&gt;
+                            </div>
+                        </div>
+
+                        <div class="challenge">
+                            <h4><span class="emoji">2️⃣</span> Desafío Responsive</h4>
+                            <p>Video que se adapta al ancho (max 800px)</p>
+                            <div class="challenge-code" onclick="this.classList.toggle('solved')">
+                                &lt;video controls playsinline<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width="100%"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style="max-width: 800px;"&gt;<br>
+&nbsp;&nbsp;&lt;source src="video.mp4" type="video/mp4"&gt;<br>
+&lt;/video&gt;
+                            </div>
+                        </div>
+
+                        <div class="challenge">
+                            <h4><span class="emoji">3️⃣</span> Desafío Múltiples Formatos</h4>
+                            <p>Video con MP4, WebM y fallback de descarga</p>
+                            <div class="challenge-code" onclick="this.classList.toggle('solved')">
+                                &lt;video controls poster="cover.jpg"&gt;<br>
+&nbsp;&nbsp;&lt;source src="video.mp4" type="video/mp4"&gt;<br>
+&nbsp;&nbsp;&lt;source src="video.webm" type="video/webm"&gt;<br>
+&nbsp;&nbsp;&lt;p&gt;Descarga &lt;a href="video.mp4"&gt;aquí&lt;/a&gt;&lt;/p&gt;<br>
+&lt;/video&gt;
+                            </div>
+                        </div>
+
+                        <div class="challenge">
+                            <h4><span class="emoji">4️⃣</span> Desafío Fondo</h4>
+                            <p>Video en loop muted sin controles como fondo</p>
+                            <div class="challenge-code" onclick="this.classList.toggle('solved')">
+                                &lt;video autoplay muted loop<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width="100%" height="100%"&gt;<br>
+&nbsp;&nbsp;&lt;source src="fondo.mp4" type="video/mp4"&gt;<br>
+&lt;/video&gt;
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="summary-box">
+                            <h3>✅ Checklist Video</h3>
+                            <p>✔️ Usa MP4 + WebM<br>✔️ Añade poster atractivo<br>✔️ Responsive con max-width<br>✔️ Para autoplay: muted + loop<br>✔️ Optimiza resolución (720p es buena)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="iframe" class="tab-content">
+            <div class="content">
+                <div>
+                    <div class="section">
+                        <h2><span class="emoji">🔗</span> iFrame - Sintaxis Básica</h2>
+                        
+                        <div class="code-block">&lt;iframe src="https://ejemplo.com"<br>        width="640" height="360"&gt;<br>&lt;/iframe&gt;</div>
+
+                        <p>La etiqueta <strong>&lt;iframe&gt;</strong> (inline frame) permite incrustar contenido de otra página web dentro de la tuya. Es muy utilizada para mapas, vídeos, redes sociales, etc.</p>
+
+                        <h3>Atributos Principales</h3>
+                        <ul class="property-list">
+                            <li><strong>src</strong> - URL del contenido a incrustar</li>
+                            <li><strong>width / height</strong> - Dimensiones</li>
+                            <li><strong>frameborder</strong> - Muestra borde (0 o 1)</li>
+                            <li><strong>allow</strong> - Permisos (fullscreen, camera, etc)</li>
+                            <li><strong>sandbox</strong> - Restricciones de seguridad</li>
+                        </ul>
+
+                        <div class="tips">
+                            <strong>🔒 Seguridad:</strong> Usa <code>sandbox</code> para restringir lo que puede hacer el iframe
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Atributos de Seguridad</h3>
+                        <ul class="property-list">
+                            <li><strong>sandbox=""</strong> - Máxima restricción</li>
+                            <li><strong>sandbox="allow-same-origin"</strong> - Permite scripts</li>
+                            <li><strong>sandbox="allow-scripts"</strong> - Permite JavaScript</li>
+                            <li><strong>sandbox="allow-forms"</strong> - Permite formularios</li>
+                        </ul>
+
+                        <div class="tips">
+                            <strong>⚠️ Importante:</strong> Siempre usa sandbox con contenido de terceros
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Casos de Uso Comunes</h3>
+                        <ul class="property-list">
+                            <li><strong>YouTube</strong> - Embeber vídeos</li>
+                            <li><strong>Google Maps</strong> - Mapas interactivos</li>
+                            <li><strong>Spotify</strong> - Playlists/canciones</li>
+                            <li><strong>Twitter</strong> - Tweets embebidos</li>
+                            <li><strong>Páginas externas</strong> - Contenido completo</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section">
+                        <h2><span class="emoji">📋</span> Ejemplos</h2>
+
+                        <h3>1️⃣ YouTube Responsive</h3>
+                        <div class="example" style="padding: 0;">
+                            <iframe width="100%" height="315" src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius: 15px;"></iframe>
+                            <p style="padding: 15px 0;">Video de YouTube embebido</p>
+                        </div>
+                        <div class="code-block">&lt;iframe width="100%" height="315"<br>  src="https://www.youtube.com/embed/ID"<br>  allow="fullscreen"&gt;<br>&lt;/iframe&gt;</div>
+
+                        <h3>2️⃣ Google Maps</h3>
+                        <div class="code-block">&lt;iframe width="600" height="450" style="border:0"<br>  src="https://www.google.com/maps/embed?..."<br>  allowfullscreen="" loading="lazy"&gt;<br>&lt;/iframe&gt;</div>
+
+                        <h3>3️⃣ Iframe Seguro</h3>
+                        <div class="code-block">&lt;iframe src="https://ejemplo.com"<br>        width="100%" height="500"<br>        sandbox="allow-same-origin allow-scripts"<br>        title="Contenido embebido"&gt;<br>&lt;/iframe&gt;</div>
+
+                        <h3>4️⃣ Documento Local</h3>
+                        <div class="code-block">&lt;iframe src="documento.html"<br>        width="100%" height="600"<br>        title="Página embebida"&gt;<br>&lt;/iframe&gt;</div>
+
+                        <h3>5️⃣ Formulario Embebido</h3>
+                        <div class="code-block">&lt;iframe src="formulario.html"<br>        sandbox="allow-same-origin allow-forms allow-scripts"<br>        width="100%"<br>        height="400"&gt;<br>&lt;/iframe&gt;</div>
+                    </div>
+
+                    <div class="section">
+                        <h2><span class="emoji">🚀</span> Desafíos</h2>
+
+                        <div class="challenge">
+                            <h4><span class="emoji">1️⃣</span> Desafío YouTube</h4>
+                            <p>Embebe un video de YouTube responsivo (16:9)</p>
+                            <div class="challenge-code" onclick="this.classList.toggle('solved')">
+                                &lt;iframe width="100%" height="315"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;src="https://www.youtube.com/embed/VIDEO_ID"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow="fullscreen"&gt;<br>
+&lt;/iframe&gt;
+                            </div>
+                        </div>
+
+                        <div class="challenge">
+                            <h4><span class="emoji">2️⃣</span> Desafío Seguro</h4>
+                            <p>iFrame con sandbox para máxima seguridad</p>
+                            <div class="challenge-code" onclick="this.classList.toggle('solved')">
+                                &lt;iframe src="https://ejemplo.com"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sandbox=""<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width="100%"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height="500"&gt;<br>
+&lt;/iframe&gt;
+                            </div>
+                        </div>
+
+                        <div class="challenge">
+                            <h4><span class="emoji">3️⃣</span> Desafío Formulario</h4>
+                            <p>iFrame que permite scripts y formularios</p>
+                            <div class="challenge-code" onclick="this.classList.toggle('solved')">
+                                &lt;iframe src="form.html"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sandbox="allow-same-origin allow-scripts allow-forms"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width="100%"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height="400"&gt;<br>
+&lt;/iframe&gt;
+                            </div>
+                        </div>
+
+                        <div class="challenge">
+                            <h4><span class="emoji">4️⃣</span> Desafío Completo</h4>
+                            <p>iFrame con todas las buenas prácticas</p>
+                            <div class="challenge-code" onclick="this.classList.toggle('solved')">
+                                &lt;iframe src="contenido.html"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title="Contenido embebido"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width="100%"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height="600"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frameborder="0"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loading="lazy"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sandbox="allow-same-origin allow-scripts"&gt;<br>
+&lt;/iframe&gt;
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="summary-box">
+                            <h3>✅ Checklist iFrame</h3>
+                            <p>✔️ Siempre usa sandbox<br>✔️ Añade title para accesibilidad<br>✔️ Usa loading="lazy" para performance<br>✔️ Responsive: width="100%"<br>✔️ Valida URLs de origen confiable</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="site-footer">
+            <div class="footer-highlight">
+                <div class="footer-kicker">
+                    <strong>Cierre del recorrido visual</strong>
+                    <span>Cuando imágenes y multimedia ya están claras, toca rematar con una estructura HTML pensada también para posicionamiento y claridad técnica.</span>
+                </div>
+                <a class="footer-cta" href="seo.html">Seguir con SEO</a>
+            </div>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <strong>HTML Launchpad</strong>
+                    <p>Guía práctica para integrar audio, video e iframes con una estructura clara, accesible y segura.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Explorar</h4>
+                    <div class="footer-links">
+                        <a href="index.html">Inicio</a>
+                        <a href="semantica_headings.html">Semántica</a>
+                        <a href="ejercicio_img.html">Imágenes</a>
+                        <a href="ejercicio_multimedia.html">Multimedia</a>
+                        <a href="seo.html">SEO</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Resumen</h4>
+                    <p>Atributos, compatibilidad, seguridad y uso correcto de elementos multimedia y contenido embebido.</p>
+                </div>
+            </div>
+            <div class="footer-note">El contenido multimedia debe aportar valor, cargar con criterio y respetar tanto el rendimiento como la accesibilidad.</div>
+        </footer>
+    </div>
+    <button class="back-to-top" type="button" aria-label="Subir arriba">↑</button>
+
+    <script>
+        function switchTab(tabName, button) {
+            // Ocultar todos los tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Desactivar todos los botones
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Mostrar el tab seleccionado
+            document.getElementById(tabName).classList.add('active');
+
+            // Activar el botón del tab
+            button.classList.add('active');
+        }
+
+        function initChallengeSolutions() {
+            document.querySelectorAll('.challenge-code').forEach(block => {
+                block.classList.add('hidden-solution');
+                block.setAttribute('role', 'button');
+                block.setAttribute('tabindex', '0');
+                block.setAttribute('aria-expanded', 'false');
+
+                block.addEventListener('click', () => {
+                    const isHidden = block.classList.toggle('hidden-solution');
+                    block.setAttribute('aria-expanded', String(!isHidden));
+                });
+
+                block.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        block.click();
+                    }
+                });
+            });
+        }
+
+        function initBackToTop() {
+            const button = document.querySelector('.back-to-top');
+            const toggleVisibility = () => {
+                button.classList.toggle('visible', window.scrollY > 320);
+            };
+
+            button.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            window.addEventListener('scroll', toggleVisibility);
+            toggleVisibility();
+        }
+
+        initChallengeSolutions();
+        initBackToTop();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guía para crear un HTML excelente para SEO: títulos, metadescripciones, semántica, imágenes, enlaces y rendimiento.">
+    <meta name="keywords" content="HTML, SEO, title, meta description, headings, semántica, rendimiento">
+    <title>SEO en HTML - Cómo hacer un HTML excelente</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6ee7ff;
+            --secondary: #ff4fbf;
+            --accent: #ff4fbf;
+            --success: #6ee7ff;
+            --dark: #0b1020;
+            --dark-soft: #0b1020;
+            --light: #f5f7fb;
+            --gray: #f5f7fb;
+            --warning: #ff4fbf;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0b1020 0%, #0b1020 100%);
+            min-height: 100vh;
+            padding: 60px 20px;
+            color: #E0E0E0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(110, 231, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 79, 191, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(11, 16, 32, 0.88);
+            backdrop-filter: blur(18px);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35),
+                        0 8px 32px rgba(97, 218, 251, 0.1),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(97, 218, 251, 0.16);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            background:
+                linear-gradient(140deg, rgba(110, 231, 255, 0.14) 0%, rgba(255, 79, 191, 0.1) 100%);
+            border-bottom: 1px solid rgba(97, 218, 251, 0.16);
+            padding: 28px 60px 72px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(131, 56, 236, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(20px); }
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 52px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: var(--light);
+        }
+
+        .brand-mark {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, rgba(97, 218, 251, 0.92) 0%, rgba(124, 58, 237, 0.92) 100%);
+            color: var(--dark);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(97, 218, 251, 0.22);
+        }
+
+        .brand-copy {
+            text-align: left;
+        }
+
+        .brand-copy strong,
+        .brand-copy span {
+            display: block;
+        }
+
+        .brand-copy strong {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            letter-spacing: -0.03em;
+        }
+
+        .brand-copy span {
+            color: rgba(248, 251, 255, 0.62);
+            font-size: 0.84rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(248, 251, 255, 0.78);
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.04);
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.is-current {
+            color: var(--light);
+            border-color: rgba(97, 218, 251, 0.34);
+            background: rgba(97, 218, 251, 0.1);
+            box-shadow: 0 12px 24px rgba(97, 218, 251, 0.12);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(97, 218, 251, 0.22);
+            background: rgba(7, 17, 31, 0.48);
+            color: rgba(248, 251, 255, 0.8);
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 22px;
+        }
+
+        header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4.1em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff 0%, #bff4ff 55%, #ff8ed2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header p {
+            font-size: 1.3em;
+            color: rgba(224, 224, 224, 0.8);
+            position: relative;
+            z-index: 1;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            padding: 0 60px 34px;
+            border-bottom: 1px solid rgba(97, 218, 251, 0.16);
+            background: transparent;
+            position: sticky;
+            top: 16px;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+        }
+
+        nav a {
+            font-family: 'Space Grotesk', sans-serif;
+            color: rgba(248, 251, 255, 0.82);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 12px 18px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--light);
+            border-color: rgba(97, 218, 251, 0.34);
+            background: rgba(97, 218, 251, 0.1);
+            box-shadow: 0 12px 24px rgba(97, 218, 251, 0.12);
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            text-decoration: none;
+            position: relative;
+            z-index: 1;
+            margin-top: 30px;
+            margin-bottom: 34px;
+        }
+
+        .hero-link {
+            padding: 14px 22px;
+            border-radius: 14px;
+            border: 1px solid rgba(97, 218, 251, 0.18);
+            color: var(--light);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .hero-link.primary {
+            color: var(--dark);
+            background: linear-gradient(135deg, var(--primary) 0%, #bff4ff 100%);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .hero-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+        }
+
+        .section-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-nav a {
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(248, 251, 255, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .section-nav a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+            color: var(--light);
+            border-color: rgba(97, 218, 251, 0.34);
+            background: rgba(97, 218, 251, 0.1);
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            padding: 60px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+            scroll-margin-top: 120px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section:hover {
+            border-color: rgba(0, 217, 255, 0.3);
+            box-shadow: 0 8px 24px rgba(0, 217, 255, 0.15),
+                        inset 0 1px 1px rgba(0, 217, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--primary);
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .section h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--secondary);
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .section h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--accent);
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 12px;
+        }
+
+        .section h5, .section h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: rgba(110, 231, 255, 0.9);
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            color: rgba(224, 224, 224, 0.85);
+            line-height: 1.8;
+            margin: 15px 0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .code-block {
+            background: rgba(10, 14, 39, 0.8);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            color: var(--primary);
+            padding: 25px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 20px 0;
+            line-height: 1.6;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-block::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .code-block::-webkit-scrollbar-track {
+            background: rgba(0, 217, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .code-block::-webkit-scrollbar-thumb {
+            background: rgba(0, 217, 255, 0.5);
+            border-radius: 10px;
+        }
+
+        .tag-box {
+            background: rgba(0, 217, 255, 0.08);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-left: 4px solid var(--secondary);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .tag-box:hover {
+            background: rgba(0, 217, 255, 0.15);
+            border-left-color: var(--primary);
+        }
+
+        .tag-box strong {
+            color: var(--primary);
+            font-size: 1.1em;
+        }
+
+        .tag-box p {
+            margin: 10px 0 0 0;
+            color: rgba(224, 224, 224, 0.8);
+        }
+
+        .example {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px dashed rgba(0, 217, 255, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .example:hover {
+            border-color: rgba(0, 217, 255, 0.7);
+            background: rgba(0, 217, 255, 0.05);
+        }
+
+        .example h1, .example h2, .example h3, 
+        .example h4, .example h5, .example h6 {
+            color: var(--primary);
+            margin: 15px 0 10px 0;
+        }
+
+        .example p {
+            color: rgba(224, 224, 224, 0.85);
+        }
+
+        .semantic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .semantic-item {
+            background: rgba(255, 79, 191, 0.08);
+            border: 1px solid rgba(255, 79, 191, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .semantic-item:hover {
+            background: rgba(255, 79, 191, 0.15);
+            border-color: rgba(255, 79, 191, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .semantic-item h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .semantic-item p {
+            font-size: 0.9em;
+            color: rgba(224, 224, 224, 0.75);
+        }
+
+        .tree-infographic {
+            margin: 28px 0;
+            padding: 28px;
+            border-radius: 18px;
+            border: 1px solid rgba(110, 231, 255, 0.2);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(110, 231, 255, 0.04) 100%);
+        }
+
+        .tree-infographic h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--light);
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+        }
+
+        .tree {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .tree ul {
+            list-style: none;
+            margin: 0;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .tree ul::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 14px;
+            width: 1px;
+            background: rgba(110, 231, 255, 0.22);
+        }
+
+        .tree li {
+            position: relative;
+            margin: 10px 0;
+        }
+
+        .tree li::before {
+            content: '';
+            position: absolute;
+            left: -18px;
+            top: 18px;
+            width: 18px;
+            height: 1px;
+            background: rgba(110, 231, 255, 0.22);
+        }
+
+        .tree > li::before {
+            display: none;
+        }
+
+        .tree-node {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 180px;
+            padding: 10px 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(11, 16, 32, 0.9);
+            color: var(--light);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+
+        .tree-node span {
+            display: block;
+            font-size: 0.82rem;
+            color: rgba(245, 247, 251, 0.68);
+        }
+
+        .tree-node.root {
+            border-color: rgba(110, 231, 255, 0.36);
+        }
+
+        .tree-node.accent-cyan {
+            border-color: rgba(110, 231, 255, 0.28);
+            box-shadow: 0 10px 24px rgba(110, 231, 255, 0.08);
+        }
+
+        .tree-node.accent-fuchsia {
+            border-color: rgba(255, 79, 191, 0.26);
+            box-shadow: 0 10px 24px rgba(255, 79, 191, 0.08);
+        }
+
+        .property-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .property-list li {
+            padding: 14px 16px;
+            margin: 10px 0;
+            background: rgba(0, 217, 255, 0.08);
+            border-radius: 10px;
+            border-left: 3px solid var(--secondary);
+            font-size: 0.95em;
+            color: rgba(224, 224, 224, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .property-list li:hover {
+            background: rgba(0, 217, 255, 0.15);
+            border-left-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .property-list strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .tips {
+            background: rgba(58, 134, 255, 0.1);
+            border-left: 4px solid var(--success);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 0.95em;
+            border: 1px solid rgba(58, 134, 255, 0.2);
+            color: rgba(224, 224, 224, 0.9);
+        }
+
+        .tips strong {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .challenge {
+            background: rgba(255, 193, 7, 0.08);
+            border-left: 4px solid var(--secondary);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .challenge:hover {
+            background: rgba(255, 193, 7, 0.12);
+            border-color: rgba(255, 193, 7, 0.4);
+        }
+
+        .challenge h4 {
+            color: var(--warning);
+            margin-bottom: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2em;
+        }
+
+        .challenge-code {
+            background: rgba(10, 14, 39, 0.9);
+            color: var(--primary);
+            padding: 18px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            line-height: 1.5;
+            display: block;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .challenge-code.hidden-solution {
+            color: transparent;
+            min-height: 88px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-style: dashed;
+        }
+
+        .challenge-code.hidden-solution::before {
+            content: 'Haz clic para mostrar la solucion';
+            color: rgba(248, 251, 255, 0.86);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            text-align: center;
+            letter-spacing: 0.02em;
+        }
+
+        .challenge-code:hover {
+            background: rgba(10, 14, 39, 0.95);
+            transform: translateX(8px);
+            border-color: rgba(0, 217, 255, 0.5);
+            box-shadow: 0 4px 12px rgba(0, 217, 255, 0.2);
+        }
+
+        .challenge-code.solved {
+            background: rgba(51, 170, 85, 0.15);
+            color: var(--success);
+            border-color: var(--success);
+            animation: pulse 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        details {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        details:hover {
+            border-color: rgba(0, 217, 255, 0.5);
+            background: rgba(0, 217, 255, 0.05);
+        }
+
+        summary {
+            cursor: pointer;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 10px;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        summary:hover {
+            color: var(--secondary);
+        }
+
+        summary::before {
+            content: '▶️';
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        details p {
+            margin-top: 15px;
+            color: rgba(224, 224, 224, 0.8);
+        }
+
+        article, section, header, footer, main, nav, aside {
+            position: relative;
+        }
+
+        article::before {
+            content: 'article';
+            position: absolute;
+            top: -25px;
+            left: 0;
+            font-size: 0.75em;
+            color: rgba(110, 231, 255, 0.6);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+        }
+
+        .site-footer {
+            border-top: 1px solid rgba(110, 231, 255, 0.16);
+            margin-top: 60px;
+            padding: 40px 60px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 79, 191, 0.06) 100%);
+        }
+
+        .footer-highlight {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(110, 231, 255, 0.12) 0%, rgba(255, 79, 191, 0.14) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-kicker {
+            color: rgba(245, 247, 251, 0.78);
+        }
+
+        .footer-kicker strong {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--light);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem;
+        }
+
+        .footer-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 190px;
+            padding: 13px 18px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: var(--dark);
+            background: linear-gradient(135deg, var(--primary) 0%, #bff4ff 100%);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .footer-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr;
+            gap: 28px;
+        }
+
+        .footer-brand strong,
+        .footer-column h4 {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--light);
+            margin-bottom: 12px;
+        }
+
+        .footer-brand p,
+        .footer-column p,
+        .footer-column a {
+            color: rgba(245, 247, 251, 0.72);
+            text-decoration: none;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+
+        .footer-note {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(245, 247, 251, 0.58);
+            font-size: 0.88rem;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, rgba(97, 218, 251, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            border: 2px solid rgba(97, 218, 251, 0.22);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            backdrop-filter: blur(5px);
+        }
+
+        .summary-box h3 {
+            color: var(--primary);
+        }
+
+        .back-to-top {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 52px;
+            height: 52px;
+            border: 1px solid rgba(97, 218, 251, 0.24);
+            border-radius: 16px;
+            background: rgba(7, 17, 31, 0.84);
+            color: var(--light);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            z-index: 300;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: rgba(97, 218, 251, 0.14);
+            border-color: rgba(97, 218, 251, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .emoji {
+            font-size: 1.3em;
+            display: inline-block;
+        }
+
+        code {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 980px) {
+            .topbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .brand {
+                justify-content: center;
+            }
+
+            .brand-copy {
+                text-align: center;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .semantic-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 2.8em;
+            }
+
+            header {
+                padding: 24px 24px 52px;
+            }
+
+            nav {
+                top: 8px;
+                padding: 0 24px 24px;
+                gap: 10px;
+            }
+
+            .content {
+                padding: 30px;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            .site-footer {
+                padding: 30px 20px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-highlight {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .footer-cta {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <header>
+        <div class="topbar">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">HL</span>
+                <span class="brand-copy">
+                    <strong>HTML Launchpad</strong>
+                    <span>Material de estudio de HTML</span>
+                </span>
+            </a>
+            <nav class="nav-links" aria-label="Navegación principal">
+                <a href="index.html">Inicio</a>
+                <a href="semantica_headings.html">Semántica</a>
+                <a href="ejercicio_img.html">Imágenes</a>
+                <a href="ejercicio_multimedia.html">Multimedia</a>
+                <a class="is-current" href="seo.html">SEO</a>
+            </nav>
+        </div>
+        <div class="hero-badge">SEO on-page con HTML</div>
+        <h1>Cómo hacer un HTML excelente para SEO</h1>
+        <p>Un buen documento HTML ayuda a que el contenido se entienda mejor: títulos claros, metadatos correctos, jerarquía lógica, imágenes optimizadas y enlaces con contexto.</p>
+        <div class="hero-actions">
+            <a class="hero-link primary" href="#title-meta">Empezar por title y meta</a>
+            <a class="hero-link" href="#checklist-seo">Ir al checklist</a>
+        </div>
+        <div class="section-nav" aria-label="Accesos rápidos de SEO">
+            <a href="#title-meta">Title y meta</a>
+            <a href="#headings-seo">Headings</a>
+            <a href="#semantic-seo">Semántica</a>
+            <a href="#content-seo">Contenido</a>
+            <a href="#images-seo">Imágenes</a>
+            <a href="#links-seo">Enlaces</a>
+            <a href="#checklist-seo">Checklist</a>
+        </div>
+    </header>
+
+    <nav>
+        <a href="#title-meta" class="nav-link">Title y meta</a>
+        <a href="#headings-seo" class="nav-link">Headings</a>
+        <a href="#semantic-seo" class="nav-link">Semántica</a>
+        <a href="#content-seo" class="nav-link">Contenido</a>
+        <a href="#images-seo" class="nav-link">Imágenes</a>
+        <a href="#links-seo" class="nav-link">Enlaces</a>
+        <a href="#checklist-seo" class="nav-link">Checklist</a>
+    </nav>
+
+    <main class="page-content">
+        <div class="content">
+            <section id="title-meta" class="section">
+                <h2><span class="emoji">🧠</span> Title y meta description</h2>
+                <p>El <code>&lt;title&gt;</code> y la metadescripción son la presentación de la página en muchos resultados de búsqueda. Deben explicar el tema con precisión y anticipar qué encontrará la persona al entrar.</p>
+                <div class="grid-2">
+                    <div class="tag-box">
+                        <strong>&lt;title&gt;</strong>
+                        <p>Resume la idea principal del documento. Lo habitual es mantenerlo entre 50 y 60 caracteres para que se muestre completo con mayor frecuencia.</p>
+                    </div>
+                    <div class="tag-box">
+                        <strong>&lt;meta name="description"&gt;</strong>
+                        <p>Aporta un resumen claro del contenido. Suele funcionar mejor una frase útil y natural que una acumulación artificial de términos.</p>
+                    </div>
+                </div>
+                <div class="code-block">&lt;title&gt;Cómo optimizar un documento HTML para SEO&lt;/title&gt;<br>&lt;meta name="description" content="Aprende a mejorar títulos, headings, imágenes y enlaces en un documento HTML."&gt;</div>
+                <div class="tips"><strong>Precisión:</strong> Cada página debe tener un título propio y una descripción alineada con su contenido real.</div>
+            </section>
+
+            <section id="headings-seo" class="section">
+                <h2><span class="emoji">📑</span> Headings y jerarquía</h2>
+                <p>Los headings ordenan la lectura y permiten entender qué partes son principales y cuáles desarrollan una idea secundaria. Esa jerarquía mejora tanto la comprensión humana como la interpretación del documento.</p>
+                <ul class="property-list">
+                    <li><strong>H1</strong> - Presenta el tema central y debería aparecer una sola vez.</li>
+                    <li><strong>H2</strong> - Divide la página en bloques principales con sentido propio.</li>
+                    <li><strong>H3-H6</strong> - Desarrollan niveles de detalle cuando la información lo exige.</li>
+                </ul>
+                <div class="tips"><strong>Coherencia:</strong> Un heading no debe elegirse por tamaño visual, sino por el nivel que ocupa dentro del contenido.</div>
+            </section>
+
+            <section id="semantic-seo" class="section">
+                <h2><span class="emoji">🏗️</span> Semántica y contexto</h2>
+                <p>Las etiquetas semánticas explican la función de cada bloque. Un documento con <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code> y <code>&lt;nav&gt;</code> bien usados transmite mejor su estructura y evita ambigüedades.</p>
+                <div class="semantic-grid">
+                    <div class="semantic-item"><h4>&lt;main&gt;</h4><p>Delimita el contenido central del documento y ayuda a identificar qué parte es la más importante.</p></div>
+                    <div class="semantic-item"><h4>&lt;article&gt;</h4><p>Indica una unidad de contenido que puede entenderse por sí sola, como una guía, noticia o ficha.</p></div>
+                    <div class="semantic-item"><h4>&lt;section&gt;</h4><p>Agrupa contenido relacionado bajo un mismo tema para mejorar orden y escaneo.</p></div>
+                    <div class="semantic-item"><h4>&lt;nav&gt;</h4><p>Se reserva para bloques de navegación principales o contextuales que ayudan a orientarse.</p></div>
+                </div>
+            </section>
+
+            <section id="content-seo" class="section">
+                <h2><span class="emoji">✍️</span> Contenido útil y bien enfocado</h2>
+                <p>Un HTML excelente para SEO no depende solo de metadatos. El contenido debe responder con claridad a una intención concreta, mantener el foco y evitar repeticiones que no aporten información nueva.</p>
+                <div class="grid-2">
+                    <div class="tag-box">
+                        <strong>Responder a una intención</strong>
+                        <p>La página debe resolver una pregunta, necesidad o tema específico sin desviarse del objetivo principal.</p>
+                    </div>
+                    <div class="tag-box">
+                        <strong>Dividir en bloques claros</strong>
+                        <p>Párrafos, listas y subtítulos bien distribuidos facilitan el escaneo y ayudan a localizar la información importante.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="images-seo" class="section">
+                <h2><span class="emoji">🖼️</span> Imágenes optimizadas</h2>
+                <p>Las imágenes deben reforzar el contenido sin perjudicar la carga. El texto alternativo, las dimensiones reservadas y la carga diferida ayudan a mejorar claridad, accesibilidad y estabilidad visual.</p>
+                <ul class="property-list">
+                    <li><strong>alt</strong> - Describe la imagen cuando aporta información relevante.</li>
+                    <li><strong>width y height</strong> - Reservan espacio y reducen saltos de maquetación.</li>
+                    <li><strong>loading="lazy"</strong> - Retrasa la carga inicial cuando la imagen no se ve al abrir la página.</li>
+                </ul>
+                <div class="code-block">&lt;img src="portada-html.jpg" alt="Estructura semántica de una página HTML" width="1200" height="630" loading="lazy"&gt;</div>
+            </section>
+
+            <section id="links-seo" class="section">
+                <h2><span class="emoji">🔗</span> Enlaces con contexto</h2>
+                <p>El texto de un enlace debe dejar claro su destino o función. Un enlace descriptivo orienta mejor a la persona que navega y aporta más contexto que expresiones genéricas.</p>
+                <div class="grid-2">
+                    <div class="tag-box">
+                        <strong>Buen anchor text</strong>
+                        <p>Explica el contenido enlazado con términos concretos y relacionados con el tema tratado.</p>
+                    </div>
+                    <div class="tag-box">
+                        <strong>Evitar expresiones vacías</strong>
+                        <p>Fórmulas como “haz clic aquí” o “más información” aportan menos contexto si aparecen aisladas.</p>
+                    </div>
+                </div>
+                <div class="code-block">&lt;a href="/guia-semantica-html"&gt;Guía de semántica HTML&lt;/a&gt;</div>
+            </section>
+
+            <section id="checklist-seo" class="section">
+                <div class="summary-box">
+                    <h2>✅ Checklist SEO para HTML</h2>
+                    <p>✔️ Title claro y específico<br>
+✔️ Meta description útil y coherente<br>
+✔️ Un único H1 y jerarquía ordenada<br>
+✔️ Estructura semántica correcta<br>
+✔️ Contenido útil y bien dividido<br>
+✔️ Imágenes optimizadas con alt y dimensiones<br>
+✔️ Enlaces con texto descriptivo<br>
+✔️ Página rápida, clara y fácil de interpretar</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-highlight">
+            <div class="footer-kicker">
+                <strong>Cierre del recorrido</strong>
+                <span>Esta guía conecta estructura, semántica, medios e intención de búsqueda para construir documentos HTML más sólidos y visibles.</span>
+            </div>
+            <a class="footer-cta" href="index.html">Volver al inicio</a>
+        </div>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <strong>HTML Launchpad</strong>
+                <p>Guía de SEO on-page aplicada al propio documento HTML: títulos, estructura, imágenes, enlaces y claridad técnica.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Explorar</h4>
+                <div class="footer-links">
+                    <a href="index.html">Inicio</a>
+                    <a href="semantica_headings.html">Semántica</a>
+                    <a href="ejercicio_img.html">Imágenes</a>
+                    <a href="ejercicio_multimedia.html">Multimedia</a>
+                    <a href="seo.html">SEO</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Resumen</h4>
+                <p>Títulos, descripciones, headings, semántica, contenido útil e imágenes optimizadas para mejorar la calidad del HTML.</p>
+            </div>
+        </div>
+        <div class="footer-note">Un HTML excelente para SEO combina semántica correcta, contenido claro y una base técnica ligera y comprensible.</div>
+    </footer>
+    </div>
+    <button class="back-to-top" type="button" aria-label="Subir arriba">↑</button>
+
+    <script>
+        // Script simple para navegación
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Scroll inicial - marcar primer nav item
+        window.addEventListener('load', () => {
+            document.querySelector('nav a').classList.add('active');
+        });
+
+        // Auto-marcar nav items al scrollear
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section[id]');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        function initChallengeSolutions() {
+            document.querySelectorAll('.challenge-code').forEach(block => {
+                block.classList.add('hidden-solution');
+                block.setAttribute('role', 'button');
+                block.setAttribute('tabindex', '0');
+                block.setAttribute('aria-expanded', 'false');
+
+                block.addEventListener('click', () => {
+                    const isHidden = block.classList.toggle('hidden-solution');
+                    block.setAttribute('aria-expanded', String(!isHidden));
+                });
+
+                block.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        block.click();
+                    }
+                });
+            });
+        }
+
+        function initBackToTop() {
+            const button = document.querySelector('.back-to-top');
+            const toggleVisibility = () => {
+                button.classList.toggle('visible', window.scrollY > 320);
+            };
+
+            button.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            window.addEventListener('scroll', toggleVisibility);
+            toggleVisibility();
+        }
+
+        initChallengeSolutions();
+        initBackToTop();
+    </script>
+</body>
+</html>

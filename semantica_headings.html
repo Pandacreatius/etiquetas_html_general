@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ejercicio de repaso: semántica HTML, headings y estructura">
+    <meta name="keywords" content="HTML5, semántica, headings, estructura">
+    <title>🎯 Semántica HTML - Estructura & Headings</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6ee7ff;
+            --secondary: #ff4fbf;
+            --accent: #ff4fbf;
+            --success: #6ee7ff;
+            --dark: #0b1020;
+            --dark-soft: #0b1020;
+            --light: #f5f7fb;
+            --warning: #ff4fbf;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0b1020 0%, #0b1020 100%);
+            min-height: 100vh;
+            padding: 60px 20px;
+            color: #E0E0E0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(110, 231, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 79, 191, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .page-shell {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(11, 16, 32, 0.88);
+            backdrop-filter: blur(18px);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35),
+                        0 8px 32px rgba(97, 218, 251, 0.1),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(97, 218, 251, 0.16);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        header {
+            background:
+                linear-gradient(140deg, rgba(110, 231, 255, 0.14) 0%, rgba(255, 79, 191, 0.1) 100%);
+            border-bottom: 1px solid rgba(97, 218, 251, 0.16);
+            padding: 28px 60px 72px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(131, 56, 236, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(20px); }
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 52px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: var(--light);
+        }
+
+        .brand-mark {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, rgba(97, 218, 251, 0.92) 0%, rgba(124, 58, 237, 0.92) 100%);
+            color: var(--dark);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(97, 218, 251, 0.22);
+        }
+
+        .brand-copy {
+            text-align: left;
+        }
+
+        .brand-copy strong,
+        .brand-copy span {
+            display: block;
+        }
+
+        .brand-copy strong {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            letter-spacing: -0.03em;
+        }
+
+        .brand-copy span {
+            color: rgba(248, 251, 255, 0.62);
+            font-size: 0.84rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(248, 251, 255, 0.78);
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.04);
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.is-current {
+            color: var(--light);
+            border-color: rgba(97, 218, 251, 0.34);
+            background: rgba(97, 218, 251, 0.1);
+            box-shadow: 0 12px 24px rgba(97, 218, 251, 0.12);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(97, 218, 251, 0.22);
+            background: rgba(7, 17, 31, 0.48);
+            color: rgba(248, 251, 255, 0.8);
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 22px;
+        }
+
+        header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4.1em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff 0%, #bff4ff 55%, #ff8ed2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header p {
+            font-size: 1.25em;
+            color: rgba(224, 224, 224, 0.82);
+            position: relative;
+            z-index: 1;
+            font-weight: 400;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        nav {
+            background: transparent;
+            border-bottom: 1px solid rgba(97, 218, 251, 0.16);
+            padding: 0 60px 34px;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 16px;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            align-items: center;
+        }
+
+        nav a {
+            color: rgba(248, 251, 255, 0.82);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            padding: 12px 18px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--light);
+            border-color: rgba(97, 218, 251, 0.34);
+            background: rgba(97, 218, 251, 0.1);
+            box-shadow: 0 12px 24px rgba(97, 218, 251, 0.12);
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+            margin-top: 30px;
+            margin-bottom: 34px;
+        }
+
+        .hero-link {
+            display: inline-flex;
+            text-decoration: none;
+            padding: 14px 22px;
+            border-radius: 14px;
+            border: 1px solid rgba(97, 218, 251, 0.18);
+            color: var(--light);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .hero-link.primary {
+            color: var(--dark);
+            background: linear-gradient(135deg, var(--primary) 0%, #bff4ff 100%);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .hero-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+        }
+
+        .section-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-nav a {
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(248, 251, 255, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .section-nav a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+            color: var(--light);
+            border-color: rgba(97, 218, 251, 0.34);
+            background: rgba(97, 218, 251, 0.1);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 60px;
+        }
+
+        article {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(97, 218, 251, 0.12);
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18),
+                        0 8px 24px rgba(97, 218, 251, 0.12);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        article:hover {
+            border-color: rgba(97, 218, 251, 0.3);
+            box-shadow: 0 20px 44px rgba(0, 0, 0, 0.2),
+                        0 12px 40px rgba(97, 218, 251, 0.15);
+            transform: translateY(-3px);
+            transition: all 0.3s ease;
+        }
+
+        article h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--light);
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        section {
+            margin-bottom: 50px;
+            scroll-margin-top: 100px;
+        }
+
+        section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--primary);
+            font-size: 2em;
+            margin: 40px 0 25px 0;
+            font-weight: 700;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(97, 218, 251, 0.2);
+        }
+
+        section h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--secondary);
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+            font-weight: 600;
+        }
+
+        p {
+            color: rgba(224, 224, 224, 0.85);
+            line-height: 1.8;
+            margin: 15px 0;
+            font-size: 1.05em;
+        }
+
+        aside {
+            background: rgba(255, 79, 191, 0.1);
+            border-left: 5px solid var(--secondary);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid rgba(255, 79, 191, 0.24);
+        }
+
+        aside h3 {
+            color: var(--secondary);
+            margin-top: 0;
+        }
+
+        aside p {
+            color: rgba(224, 224, 224, 0.8);
+            margin: 10px 0;
+        }
+
+        figure {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid rgba(97, 218, 251, 0.24);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        figure:hover {
+            border-color: rgba(0, 217, 255, 0.6);
+            background: rgba(0, 217, 255, 0.08);
+            transform: translateY(-5px);
+        }
+
+        figure img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            max-width: 600px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        figcaption {
+            color: rgba(224, 224, 224, 0.75);
+            font-size: 0.95em;
+            font-style: italic;
+            padding: 0 10px;
+        }
+
+        .semantic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 35px 0;
+        }
+
+        .semantic-card {
+            background: rgba(0, 217, 255, 0.08);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-left: 4px solid var(--secondary);
+            padding: 25px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .semantic-card:hover {
+            background: rgba(0, 217, 255, 0.15);
+            border-color: rgba(0, 217, 255, 0.5);
+            border-left-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .semantic-card h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+
+        .semantic-card p {
+            font-size: 0.95em;
+            color: rgba(224, 224, 224, 0.75);
+            margin: 0;
+        }
+
+        .tree-infographic {
+            margin: 28px 0;
+            padding: 28px;
+            border-radius: 18px;
+            border: 1px solid rgba(110, 231, 255, 0.2);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(110, 231, 255, 0.04) 100%);
+        }
+
+        .tree-infographic h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--light);
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+        }
+
+        .tree {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .tree ul {
+            list-style: none;
+            margin: 0;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .tree ul::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 14px;
+            width: 1px;
+            background: rgba(110, 231, 255, 0.22);
+        }
+
+        .tree li {
+            position: relative;
+            margin: 10px 0;
+        }
+
+        .tree li::before {
+            content: '';
+            position: absolute;
+            left: -18px;
+            top: 18px;
+            width: 18px;
+            height: 1px;
+            background: rgba(110, 231, 255, 0.22);
+        }
+
+        .tree > li::before {
+            display: none;
+        }
+
+        .tree-node {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 180px;
+            padding: 10px 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(11, 16, 32, 0.9);
+            color: var(--light);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+
+        .tree-node span {
+            display: block;
+            font-size: 0.82rem;
+            color: rgba(245, 247, 251, 0.68);
+        }
+
+        .tree-node.root {
+            border-color: rgba(110, 231, 255, 0.36);
+        }
+
+        .tree-node.accent-cyan {
+            border-color: rgba(110, 231, 255, 0.28);
+            box-shadow: 0 10px 24px rgba(110, 231, 255, 0.08);
+        }
+
+        .tree-node.accent-fuchsia {
+            border-color: rgba(255, 79, 191, 0.26);
+            box-shadow: 0 10px 24px rgba(255, 79, 191, 0.08);
+        }
+
+        .code-block {
+            background: rgba(10, 14, 39, 0.8);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            color: var(--primary);
+            padding: 25px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 25px 0;
+            line-height: 1.6;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-block::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .code-block::-webkit-scrollbar-track {
+            background: rgba(0, 217, 255, 0.1);
+        }
+
+        .code-block::-webkit-scrollbar-thumb {
+            background: rgba(0, 217, 255, 0.5);
+            border-radius: 10px;
+        }
+
+        .example-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px dashed rgba(0, 217, 255, 0.4);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+            transition: all 0.3s ease;
+        }
+
+        .example-box:hover {
+            border-color: rgba(0, 217, 255, 0.7);
+            background: rgba(0, 217, 255, 0.05);
+        }
+
+        .example-box h4 {
+            color: var(--accent);
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 15px;
+        }
+
+        .tips {
+            background: rgba(58, 134, 255, 0.1);
+            border-left: 4px solid var(--success);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 1px solid rgba(58, 134, 255, 0.2);
+        }
+
+        .tips strong {
+            color: var(--success);
+        }
+
+        .tips p {
+            margin: 0;
+            font-size: 0.95em;
+        }
+
+        .challenge {
+            background: rgba(255, 193, 7, 0.08);
+            border-left: 4px solid var(--warning);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid rgba(255, 193, 7, 0.2);
+        }
+
+        .challenge h4 {
+            color: var(--warning);
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .challenge-code {
+            background: rgba(10, 14, 39, 0.9);
+            color: var(--primary);
+            padding: 18px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            margin: 15px 0;
+            cursor: pointer;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            line-height: 1.5;
+            display: block;
+            overflow-x: auto;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .challenge-code.hidden-solution {
+            color: transparent;
+            min-height: 88px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-style: dashed;
+        }
+
+        .challenge-code.hidden-solution::before {
+            content: 'Haz clic para mostrar la solucion';
+            color: rgba(248, 251, 255, 0.86);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            text-align: center;
+            letter-spacing: 0.02em;
+        }
+
+        .challenge-code:hover {
+            transform: translateX(8px);
+            border-color: rgba(0, 217, 255, 0.5);
+            box-shadow: 0 4px 12px rgba(0, 217, 255, 0.2);
+        }
+
+        .challenge-code.solved {
+            background: rgba(51, 170, 85, 0.15);
+            color: var(--success);
+            border-color: var(--success);
+            animation: pulse 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .structure-visual {
+            background: rgba(255, 79, 191, 0.08);
+            border: 2px solid rgba(255, 79, 191, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            font-family: 'Space Grotesk', sans-serif;
+            color: rgba(224, 224, 224, 0.85);
+        }
+
+        .structure-visual div {
+            background: rgba(0, 217, 255, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .structure-visual div div {
+            background: rgba(255, 79, 191, 0.1);
+            border-left-color: var(--accent);
+            margin-left: 20px;
+        }
+
+        .structure-visual div div div {
+            background: rgba(255, 0, 110, 0.08);
+            border-left-color: var(--secondary);
+            margin-left: 40px;
+        }
+
+        .site-footer {
+            border-top: 1px solid rgba(110, 231, 255, 0.16);
+            margin-top: 48px;
+            padding: 40px 60px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 79, 191, 0.06) 100%);
+        }
+
+        .footer-highlight {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(110, 231, 255, 0.12) 0%, rgba(255, 79, 191, 0.14) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-kicker {
+            color: rgba(245, 247, 251, 0.78);
+        }
+
+        .footer-kicker strong {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--light);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem;
+        }
+
+        .footer-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 190px;
+            padding: 13px 18px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: var(--dark);
+            background: linear-gradient(135deg, var(--primary) 0%, #bff4ff 100%);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .footer-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr;
+            gap: 28px;
+        }
+
+        .footer-brand strong,
+        .footer-column h4 {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--light);
+            margin-bottom: 12px;
+        }
+
+        .footer-brand p,
+        .footer-column p,
+        .footer-column a {
+            color: rgba(245, 247, 251, 0.72);
+            text-decoration: none;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+
+        .footer-note {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(245, 247, 251, 0.58);
+            font-size: 0.88rem;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, rgba(97, 218, 251, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            border: 2px solid rgba(97, 218, 251, 0.22);
+            border-radius: 15px;
+            padding: 35px;
+            margin: 50px 0;
+            backdrop-filter: blur(5px);
+        }
+
+        .summary-box h3 {
+            color: var(--primary);
+            border-bottom: 2px solid rgba(97, 218, 251, 0.22);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 52px;
+            height: 52px;
+            border: 1px solid rgba(97, 218, 251, 0.24);
+            border-radius: 16px;
+            background: rgba(7, 17, 31, 0.84);
+            color: var(--light);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            z-index: 300;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: rgba(97, 218, 251, 0.14);
+            border-color: rgba(97, 218, 251, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .summary-box p {
+            color: rgba(224, 224, 224, 0.85);
+            margin: 12px 0;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+
+        code {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 980px) {
+            .topbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .brand {
+                justify-content: center;
+            }
+
+            .brand-copy {
+                text-align: center;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            header {
+                padding: 24px 24px 52px;
+            }
+
+            header h1 {
+                font-size: 2.8em;
+            }
+
+            nav {
+                top: 8px;
+                padding: 0 24px 24px;
+                gap: 10px;
+            }
+
+            main {
+                padding: 30px 24px;
+            }
+
+            article {
+                padding: 25px;
+            }
+
+            article h1 {
+                font-size: 1.8em;
+            }
+
+            section h2 {
+                font-size: 1.4em;
+            }
+
+            .site-footer {
+                padding: 30px 20px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-highlight {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .footer-cta {
+                width: 100%;
+            }
+
+            .semantic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+    <header>
+        <div class="topbar">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">HL</span>
+                <span class="brand-copy">
+                    <strong>HTML Launchpad</strong>
+                    <span>Material de estudio de HTML</span>
+                </span>
+            </a>
+            <nav class="nav-links" aria-label="Navegación principal">
+                <a href="index.html">Inicio</a>
+                <a class="is-current" href="semantica_headings.html">Semántica</a>
+                <a href="ejercicio_img.html">Imágenes</a>
+                <a href="ejercicio_multimedia.html">Multimedia</a>
+                <a href="seo.html">SEO</a>
+            </nav>
+        </div>
+        <div class="hero-badge">Semántica y jerarquía del contenido</div>
+        <h1>Semántica y headings para ordenar una página de verdad</h1>
+        <p>La semántica HTML define la función de cada bloque y ayuda a construir páginas más claras, ordenadas y comprensibles.</p>
+        <div class="hero-actions">
+            <a class="hero-link primary" href="#semantica">Ver fundamentos</a>
+            <a class="hero-link" href="seo.html">Ir a SEO</a>
+        </div>
+        <div class="section-nav" aria-label="Accesos rápidos de semántica">
+            <a href="#semantica">Semántica</a>
+            <a href="#headings">Headings</a>
+            <a href="#estructura">Arquitectura</a>
+            <a href="#ejemplos">Ejemplos</a>
+            <a href="#desafios">Desafíos</a>
+        </div>
+    </header>
+
+    <nav>
+        <a href="#semantica" class="nav-link">Semántica</a>
+        <a href="#headings" class="nav-link">Headings</a>
+        <a href="#estructura" class="nav-link">Arquitectura</a>
+        <a href="#ejemplos" class="nav-link">Ejemplos</a>
+        <a href="#desafios" class="nav-link">Desafíos</a>
+    </nav>
+
+    <main>
+        <article>
+            <h1>Repaso: Semántica HTML5 & Headings</h1>
+
+            <section id="semantica">
+                <h2><span class="emoji">🏗️</span> ¿Qué es la Semántica HTML?</h2>
+                
+                <p>La semántica HTML refiere al significado de las etiquetas. Usar etiquetas semánticas significa elegir elementos que describan correctamente el contenido que envuelven.</p>
+
+                <p>Cuando utilizas <code>&lt;header&gt;</code> en lugar de <code>&lt;div class="header"&gt;</code>, estás diciéndole a los navegadores, motores de búsqueda y dispositivos de asistencia que ese contenido es un encabezado.</p>
+
+                <h3>¿Por qué es importante?</h3>
+                <ul style="list-style-position: inside; color: rgba(224, 224, 224, 0.85); line-height: 1.8;">
+                    <li><strong>SEO:</strong> Los buscadores entienden mejor la estructura</li>
+                    <li><strong>Accesibilidad:</strong> Lectores de pantalla interpretan correctamente</li>
+                    <li><strong>Mantenimiento:</strong> El código es más legible y fácil de mantener</li>
+                    <li><strong>Estándares:</strong> Cumples con los estándares web HTML5</li>
+                </ul>
+
+                <div class="tips">
+                    <strong>💡 Recuerda:</strong> La semántica no es sobre CSS o apariencia visual. Es sobre el significado y la estructura del contenido.
+                </div>
+
+                <h3>Principales Etiquetas Semánticas</h3>
+                <div class="semantic-grid">
+                    <div class="semantic-card">
+                        <h4>&lt;header&gt;</h4>
+                        <p>Encabezado de la página o sección. Contiene logo, título, navegación introductoria.</p>
+                    </div>
+                    <div class="semantic-card">
+                        <h4>&lt;nav&gt;</h4>
+                        <p>Navegación. Links a secciones principales de la página o sitio.</p>
+                    </div>
+                    <div class="semantic-card">
+                        <h4>&lt;main&gt;</h4>
+                        <p>Contenido principal. Debe haber UNO por página. Contiene lo importante.</p>
+                    </div>
+                    <div class="semantic-card">
+                        <h4>&lt;article&gt;</h4>
+                        <p>Contenido independiente. Blog post, noticia, resumen de producto.</p>
+                    </div>
+                    <div class="semantic-card">
+                        <h4>&lt;section&gt;</h4>
+                        <p>Agrupa contenido temático. Generalmente tiene un heading (h2, h3, etc).</p>
+                    </div>
+                    <div class="semantic-card">
+                        <h4>&lt;aside&gt;</h4>
+                        <p>Contenido tangencialmente relacionado. Sidebar, anuncios, información adicional.</p>
+                    </div>
+                    <div class="semantic-card">
+                        <h4>&lt;footer&gt;</h4>
+                        <p>Pie de página. Derechos, links importantes, contacto, información legal.</p>
+                    </div>
+                    <div class="semantic-card">
+                        <h4>&lt;figure&gt; y &lt;figcaption&gt;</h4>
+                        <p>Contenido ilustrativo con descripción. Imágenes, diagramas, código con contexto.</p>
+                    </div>
+                </div>
+
+                <div class="tree-infographic">
+                    <h4>Infografía: árbol de etiquetas semánticas</h4>
+                    <ul class="tree">
+                        <li>
+                            <div class="tree-node root">
+                                <strong>&lt;body&gt;</strong>
+                                <span>Estructura visible del documento</span>
+                            </div>
+                            <ul>
+                                <li><div class="tree-node accent-cyan"><strong>&lt;header&gt;</strong><span>Presentación inicial</span></div></li>
+                                <li><div class="tree-node accent-cyan"><strong>&lt;nav&gt;</strong><span>Navegación principal</span></div></li>
+                                <li>
+                                    <div class="tree-node accent-fuchsia">
+                                        <strong>&lt;main&gt;</strong>
+                                        <span>Contenido principal</span>
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <div class="tree-node accent-fuchsia">
+                                                <strong>&lt;article&gt;</strong>
+                                                <span>Unidad de contenido autónoma</span>
+                                            </div>
+                                            <ul>
+                                                <li><div class="tree-node accent-fuchsia"><strong>&lt;section&gt;</strong><span>Bloque temático</span></div></li>
+                                                <li><div class="tree-node accent-fuchsia"><strong>&lt;figure&gt;</strong><span>Recurso con contexto</span></div></li>
+                                            </ul>
+                                        </li>
+                                        <li><div class="tree-node accent-cyan"><strong>&lt;aside&gt;</strong><span>Información complementaria</span></div></li>
+                                    </ul>
+                                </li>
+                                <li><div class="tree-node accent-cyan"><strong>&lt;footer&gt;</strong><span>Información final</span></div></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="headings">
+                <h2><span class="emoji">📑</span> Headings - H1 a H6</h2>
+
+                <p>Los headings (encabezados) crean la estructura jerárquica del contenido. Cada nivel tiene un propósito específico.</p>
+
+                <h3>Reglas Importantes</h3>
+                <div class="example-box">
+                    <h4>✅ UN H1 por página</h4>
+                    <p>El H1 es el título principal de la página. Debe ser único y descriptivo. Resume el tema principal de toda la página.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>✅ Orden jerárquico</h4>
+                    <p>Después de H1, usa H2 para secciones principales. Dentro de H2, usa H3 para subsecciones. No saltes niveles (no hagas H1 → H3).</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>✅ Uno por sección</h4>
+                    <p>Cada sección <code>&lt;section&gt;</code> debe tener un único heading de su nivel apropiado (generalmente H2 o H3).</p>
+                </div>
+
+                <div class="tips">
+                    <strong>⚠️ Antipatrón:</strong> NO uses headings para styling (para hacer texto grande). Usa CSS. Los headings son para estructura semántica.
+                </div>
+
+                <h3>Jerarquía Visual</h3>
+                <div class="example-box">
+                    <h4>Estructura correcta</h4>
+                    <div class="code-block">
+&lt;h1&gt;Tema Principal (Gran Título)&lt;/h1&gt;
+
+&lt;h2&gt;Sección 1&lt;/h2&gt;
+&lt;p&gt;Contenido...&lt;/p&gt;
+&lt;h3&gt;Subsección 1.1&lt;/h3&gt;
+&lt;p&gt;Contenido...&lt;/p&gt;
+
+&lt;h2&gt;Sección 2&lt;/h2&gt;
+&lt;p&gt;Contenido...&lt;/p&gt;
+&lt;h3&gt;Subsección 2.1&lt;/h3&gt;
+&lt;p&gt;Contenido...&lt;/p&gt;
+                    </div>
+                </div>
+
+                <h3>Diferencia entre niveles</h3>
+                <div class="example-box">
+                    <h4>Ejemplo visual de headings</h4>
+                    <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 8px;">
+                        <h1 style="font-size: 2.5em; color: var(--primary); margin: 15px 0;">H1 - Título Principal</h1>
+                        <h2 style="font-size: 2em; color: var(--secondary); margin: 15px 0;">H2 - Sección Principal</h2>
+                        <h3 style="font-size: 1.5em; color: var(--accent); margin: 15px 0;">H3 - Subsección</h3>
+                        <h4 style="font-size: 1.3em; color: rgba(0, 217, 255, 0.9); margin: 15px 0;">H4 - Detalle</h4>
+                        <h5 style="font-size: 1.1em; color: rgba(0, 217, 255, 0.8); margin: 15px 0;">H5 - Detalle Menor</h5>
+                        <h6 style="font-size: 1em; color: rgba(0, 217, 255, 0.7); margin: 15px 0;">H6 - Detalle Muy Menor</h6>
+                    </div>
+                </div>
+            </section>
+
+            <section id="estructura">
+                <h2><span class="emoji">🏛️</span> Estructura Completa de una Página</h2>
+
+                <p>Esta es la estructura estándar y recomendada para todas las páginas HTML5:</p>
+
+                <h3>Patrón: Header → Nav → Main → Footer</h3>
+
+                <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;meta name="description" content="..."&gt;
+  &lt;title&gt;Título de la Página&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Titulo del Sitio&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;a href="#"&gt;Link 1&lt;/a&gt;
+      &lt;a href="#"&gt;Link 2&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;article&gt;
+      &lt;h1&gt;Título del Artículo&lt;/h1&gt;
+      
+      &lt;section&gt;
+        &lt;h2&gt;Sección 1&lt;/h2&gt;
+        &lt;p&gt;Contenido...&lt;/p&gt;
+      &lt;/section&gt;
+
+      &lt;section&gt;
+        &lt;h2&gt;Sección 2&lt;/h2&gt;
+        &lt;p&gt;Contenido...&lt;/p&gt;
+      &lt;/section&gt;
+    &lt;/article&gt;
+
+    &lt;aside&gt;
+      &lt;h3&gt;Información Adicional&lt;/h3&gt;
+      &lt;p&gt;...&lt;/p&gt;
+    &lt;/aside&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;© 2024 Mi Sitio. Todos los derechos reservados.&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                </div>
+
+                <h3>Visualización de la Estructura</h3>
+                <div class="structure-visual">
+                    <div>📦 &lt;body&gt;</div>
+                    <div>🔵 &lt;header&gt; - Encabezado</div>
+                    <div>🟢 &lt;nav&gt; - Navegación</div>
+                    <div>🟣 &lt;main&gt; - Contenido Principal
+                        <div>🟠 &lt;article&gt; - Artículo</div>
+                        <div>🟡 &lt;section&gt; - Sección 1</div>
+                        <div>🟡 &lt;section&gt; - Sección 2</div>
+                        <div>🟠 &lt;aside&gt; - Sidebar</div>
+                    </div>
+                    <div>🔵 &lt;footer&gt; - Pie de página</div>
+                </div>
+
+                <div class="tips">
+                    <strong>🎯 Estándar de Industria:</strong> Esta estructura (Header > Nav > Main > Footer) es el patrón utilizado por casi todos los sitios web modernos.
+                </div>
+            </section>
+
+            <section id="ejemplos">
+                <h2><span class="emoji">🖼️</span> Figure y Contexto Visual</h2>
+
+                <p>Cuando una imagen necesita contexto dentro del contenido, se acompaña con <code>&lt;figure&gt;</code> y <code>&lt;figcaption&gt;</code> para expresar mejor su significado.</p>
+
+                <h3>Cuándo usar figure</h3>
+                <ul style="list-style-position: inside; color: rgba(224, 224, 224, 0.85); line-height: 1.8; margin: 15px 0;">
+                    <li>Cuando la imagen aporta información y no solo decoración</li>
+                    <li>Cuando el recurso necesita explicación o referencia</li>
+                    <li>Cuando quieres conectar una visual con una descripción legible</li>
+                </ul>
+
+                <h3>Patrón recomendado</h3>
+                <div class="code-block">
+&lt;figure&gt;
+  &lt;img src="diagrama.jpg" alt="Diagrama de la arquitectura"&gt;
+  &lt;figcaption&gt;Diagrama de arquitectura del sistema&lt;/figcaption&gt;
+&lt;/figure&gt;
+                </div>
+
+                <h3>Ejemplo Práctico</h3>
+                <figure>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300'%3E%3Crect fill='%238338EC' width='600' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='32' fill='white' text-anchor='middle' dy='.3em'%3EEsta es una imagen de ejemplo%3C/text%3E%3C/svg%3E" alt="Imagen de ejemplo en la sección">
+                    <figcaption>Una imagen con descripción semántica. El figcaption siempre dentro de figure.</figcaption>
+                </figure>
+
+                <h3>Qué dejamos para la guía de imágenes</h3>
+                <ul style="list-style-position: inside; color: rgba(224, 224, 224, 0.85); line-height: 1.8; margin: 15px 0;">
+                    <li><strong>alt, width, height</strong> y <strong>loading</strong> se desarrollan en la página dedicada a imágenes</li>
+                    <li>Aquí lo importante es entender el papel estructural de la imagen dentro del contenido</li>
+                </ul>
+
+                <div class="tips">
+                    <strong>Contexto visual:</strong> <code>&lt;figure&gt;</code> y <code>&lt;figcaption&gt;</code> aportan significado cuando una imagen necesita explicación dentro del contenido.
+                </div>
+            </section>
+
+            <section id="desafios">
+                <h2><span class="emoji">🚀</span> Desafíos Prácticos</h2>
+
+                <div class="challenge">
+                    <h4>1️⃣ Desafío: Estructura Básica</h4>
+                    <p>Crea una página HTML5 con estructura correcta: header, nav, main, article, sections y footer</p>
+                    <div class="challenge-code" onclick="this.classList.toggle('solved')">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Mi Página&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Bienvenido&lt;/h1&gt;
+    &lt;nav&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/nav&gt;
+  &lt;/header&gt;
+  &lt;main&gt;
+    &lt;article&gt;
+      &lt;h1&gt;Mi Artículo&lt;/h1&gt;
+      &lt;section&gt;
+        &lt;h2&gt;Primera Sección&lt;/h2&gt;
+        &lt;p&gt;Contenido...&lt;/p&gt;
+      &lt;/section&gt;
+    &lt;/article&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;&lt;p&gt;© 2024&lt;/p&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                    </div>
+                </div>
+
+                <div class="challenge">
+                    <h4>2️⃣ Desafío: Headings Jerárquicos</h4>
+                    <p>Estructura correcta de headings: H1 único, H2 para secciones, H3 para subsecciones</p>
+                    <div class="challenge-code" onclick="this.classList.toggle('solved')">
+&lt;h1&gt;Tema Principal de la Página&lt;/h1&gt;
+
+&lt;section&gt;
+  &lt;h2&gt;Primera Sección&lt;/h2&gt;
+  &lt;p&gt;Contenido principal de sección 1...&lt;/p&gt;
+  
+  &lt;h3&gt;Subsección 1.1&lt;/h3&gt;
+  &lt;p&gt;Contenido de subsección...&lt;/p&gt;
+&lt;/section&gt;
+
+&lt;section&gt;
+  &lt;h2&gt;Segunda Sección&lt;/h2&gt;
+  &lt;p&gt;Contenido principal de sección 2...&lt;/p&gt;
+&lt;/section&gt;
+                    </div>
+                </div>
+
+                <div class="challenge">
+                    <h4>3️⃣ Desafío: Article con Sections</h4>
+                    <p>Artículo con estructura clara: título, múltiples secciones temáticas, imágenes</p>
+                    <div class="challenge-code" onclick="this.classList.toggle('solved')">
+&lt;article&gt;
+  &lt;h1&gt;Las Mejores Prácticas en HTML5&lt;/h1&gt;
+  
+  &lt;section&gt;
+    &lt;h2&gt;Introducción&lt;/h2&gt;
+    &lt;p&gt;HTML5 es el estándar actual...&lt;/p&gt;
+    &lt;figure&gt;
+      &lt;img src="img1.jpg" alt="Logo HTML5"&gt;
+      &lt;figcaption&gt;El logo oficial de HTML5&lt;/figcaption&gt;
+    &lt;/figure&gt;
+  &lt;/section&gt;
+  
+  &lt;section&gt;
+    &lt;h2&gt;Mejores Prácticas&lt;/h2&gt;
+    &lt;p&gt;Siempre usa etiquetas semánticas...&lt;/p&gt;
+  &lt;/section&gt;
+&lt;/article&gt;
+                    </div>
+                </div>
+
+                <div class="challenge">
+                    <h4>4️⃣ Desafío: Página Completa</h4>
+                    <p>Página completa con header/nav/main/article/aside/footer. Estructura perfecta.</p>
+                    <div class="challenge-code" onclick="this.classList.toggle('solved')">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Blog de Tecnología&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Mi Blog Tech&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;a href="/"&gt;Inicio&lt;/a&gt;
+      &lt;a href="/blog"&gt;Blog&lt;/a&gt;
+      &lt;a href="/contacto"&gt;Contacto&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;article&gt;
+      &lt;h1&gt;Introducción a HTML5&lt;/h1&gt;
+      
+      &lt;section&gt;
+        &lt;h2&gt;¿Qué es HTML5?&lt;/h2&gt;
+        &lt;p&gt;HTML5 es...&lt;/p&gt;
+      &lt;/section&gt;
+      
+      &lt;section&gt;
+        &lt;h2&gt;Ventajas Principales&lt;/h2&gt;
+        &lt;p&gt;Las ventajas incluyen...&lt;/p&gt;
+      &lt;/section&gt;
+    &lt;/article&gt;
+
+    &lt;aside&gt;
+      &lt;h3&gt;Artículos Relacionados&lt;/h3&gt;
+      &lt;p&gt;Links a artículos...&lt;/p&gt;
+    &lt;/aside&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;© 2024 Mi Blog Tech. Todos derechos reservados.&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                    </div>
+                </div>
+
+                <div class="challenge">
+                    <h4>5️⃣ Desafío: Figure y Figcaption</h4>
+                    <p>Usa figure correctamente para imágenes con contexto importante</p>
+                    <div class="challenge-code" onclick="this.classList.toggle('solved')">
+&lt;figure&gt;
+  &lt;img src="arquitectura.png" 
+       alt="Diagrama de arquitectura del sistema"
+       width="800" height="400"&gt;
+  &lt;figcaption&gt;
+    Figura 1: Arquitectura de la aplicación web.
+    El diagrama muestra la relación entre cliente, servidor y base de datos.
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="summary-box">
+                    <h3>✅ Checklist Final - Dominas Semántica HTML</h3>
+                    <p>✔️ Entiendes por qué la semántica es importante (SEO, accesibilidad, mantenimiento)</p>
+                    <p>✔️ Usas &lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;article&gt;, &lt;section&gt;, &lt;aside&gt;, &lt;footer&gt; correctamente</p>
+                    <p>✔️ Estructuras headings correctamente: UN H1, jerarquía lógica</p>
+                    <p>✔️ Organizas páginas completas: Header → Nav → Main → Footer</p>
+                    <p>✔️ Utilizas &lt;figure&gt; y &lt;figcaption&gt; para imágenes contextuales</p>
+                    <p>✔️ Escribes atributo alt descriptivo en todas las imágenes</p>
+                    <p>✔️ Usas &lt;section&gt; para agrupar contenido temático</p>
+                    <p>✔️ Creas estructuras nidas y lógicas (sections dentro de articles)</p>
+                </div>
+            </section>
+
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-highlight">
+            <div class="footer-kicker">
+                <strong>Siguiente lectura útil</strong>
+                <span>Después de entender la estructura semántica, conviene ver cómo ese significado mejora la visibilidad y la calidad SEO.</span>
+            </div>
+            <a class="footer-cta" href="seo.html">Ir a la guía SEO</a>
+        </div>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <strong>HTML Launchpad</strong>
+                <p>Semántica, jerarquía de headings y organización lógica del contenido para construir documentos claros y accesibles.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Explorar</h4>
+                <div class="footer-links">
+                    <a href="index.html">Inicio</a>
+                    <a href="semantica_headings.html">Semántica</a>
+                    <a href="ejercicio_img.html">Imágenes</a>
+                    <a href="ejercicio_multimedia.html">Multimedia</a>
+                    <a href="seo.html">SEO</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Resumen</h4>
+                <p>Uso correcto de etiquetas semánticas, headings y estructura general del documento HTML.</p>
+            </div>
+        </div>
+        <div class="footer-note">La semántica adecuada facilita la lectura humana, la interpretación por buscadores y la navegación con tecnologías de asistencia.</div>
+    </footer>
+    </div>
+    <button class="back-to-top" type="button" aria-label="Subir arriba">↑</button>
+
+    <script>
+        // Navegación activa al scrollear
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        window.addEventListener('load', () => {
+            document.querySelector('nav a').classList.add('active');
+        });
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section[id]');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        function initChallengeSolutions() {
+            document.querySelectorAll('.challenge-code').forEach(block => {
+                block.classList.add('hidden-solution');
+                block.setAttribute('role', 'button');
+                block.setAttribute('tabindex', '0');
+                block.setAttribute('aria-expanded', 'false');
+
+                block.addEventListener('click', () => {
+                    const isHidden = block.classList.toggle('hidden-solution');
+                    block.setAttribute('aria-expanded', String(!isHidden));
+                });
+
+                block.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        block.click();
+                    }
+                });
+            });
+        }
+
+        function initBackToTop() {
+            const button = document.querySelector('.back-to-top');
+            const toggleVisibility = () => {
+                button.classList.toggle('visible', window.scrollY > 320);
+            };
+
+            button.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            window.addEventListener('scroll', toggleVisibility);
+            toggleVisibility();
+        }
+
+        initChallengeSolutions();
+        initBackToTop();
+    </script>
+</body>
+</html>
